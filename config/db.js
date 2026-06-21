@@ -1,15 +1,15 @@
+import mongoose from "mongoose";
+import { envConfig } from "../config/env.js";
 
-import mongoose from 'mongoose';
-import { config } from '/index.js';
+const connectDB = async () => {
+  const mongoUri = envConfig.mongoUri;
 
+  if (!mongoUri) {
+    throw new Error("Falta la variable MONGODB_URI");
+  }
 
-export const connectDB = async () => {
-    try {
-        await mongoose.connect(config.mongoURI)
-        console.log('Conectado a MongoDB');
+  await mongoose.connect(mongoUri);
+  console.log("MongoDB conectado");
+};
 
-    } catch (error) {
-        console.error('Error al conectar a MongoDB:', error);
-        process.exit(1);
-    }
-}
+export default connectDB;
