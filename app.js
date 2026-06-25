@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import productRoutes from "./routes/product.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 const app = express();
 
@@ -13,6 +14,9 @@ app.use("/uploads", express.static("uploads"));
 
 // Rutas de productos
 app.use("/api/products", productRoutes);   
+
+// Rutas de usuarios
+app.use("/api/users", userRoutes);
 
 
 app.get("/", (req, res) => {
