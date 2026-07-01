@@ -1,14 +1,8 @@
 import User from "../models/User.js";
-import bcrypt from "bcryptjs";
 
-// Crea un nuevo usuario en la base de datos. Hashea la contraseña si viene.
+// Crea un nuevo usuario en la base de datos.
 export const createUser = async (data) => {
-    const payload = { ...data };
-    if (payload.password) {
-        const salt = await bcrypt.genSalt(10);
-        payload.password = await bcrypt.hash(payload.password, salt);
-    }
-    return await User.create(payload);
+    return await User.create(data);
 };
 
 
@@ -33,12 +27,7 @@ export const findUserByEmail = async (email) => {
 // Actualiza un usuario por su ID y devuelve el documento nuevo (sin contraseña por defecto).
 // Si `data.password` está presente, se hashea antes de actualizar.
 export const updateUser = async (id, data) => {
-    const payload = { ...data };
-    if (payload.password) {
-        const salt = await bcrypt.genSalt(10);
-        payload.password = await bcrypt.hash(payload.password, salt);
-    }
-    return await User.findByIdAndUpdate(id, payload, { new: true }).select("-password");
+    return await User.findByIdAndUpdate(id, data, { new: true }).select("-password");
 };
 
 

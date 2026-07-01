@@ -1,10 +1,66 @@
 
-// Acontinuacion 
-
 import mongoose from "mongoose";
 import { ORDER_STATUS, DELIVERY_PRIORITY } from "../constants/index.js";
 
-const orderSchema = new mongoose.Schema(
+const deliveryAddressSchema = new mongoose.Schema(  // la direccion de preferencia del usuario para la entrega de la orden
+    {
+        label: {
+            type: String,
+            required: true
+        },
+
+        address: {
+            type: String,
+            required: true
+        },
+
+        reference: {
+            type: String,
+            default: ""
+        }
+    },
+    {
+        _id: false
+    }
+);
+
+const orderProductSchema = new mongoose.Schema(  // los productos que el usuario compra en la orden
+    {
+        
+        image: {
+            type: String,
+            required: true
+        },
+        
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product",
+            required: true
+        },
+
+        name: {
+            type: String,
+            required: true
+        },
+
+        price: {
+            type: Number,
+            required: true
+        },
+
+        quantity: {
+            type: Number,
+            required: true,
+            min: 1,
+            default: 1
+        }
+    },
+    {
+        _id: false
+    }
+);
+
+const orderSchema = new mongoose.Schema( // la orden es creada por el usuario
     {
         buyer: {
             type: mongoose.Schema.Types.ObjectId,
@@ -12,21 +68,21 @@ const orderSchema = new mongoose.Schema(
             required: true
         },
 
-        products: [
-            {
-                product: {
-                    type: mongoose.Schema.Types.ObjectId,  // obtiene el id del producto y refleja el modelo de producto
-                    ref: "Product",
-                    required: true
-                },
-        
-                quantity: {
-                    type: Number,
-                    required: true,
-                    default: 1
-                }
-            }
-        ],
+        store: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Store",
+            required: true
+        },
+
+        products: {
+            type: [orderProductSchema],
+            required: true
+        },
+
+        deliveryAddress: {
+            type: deliveryAddressSchema,
+            required: true
+        },
 
         total: {
             type: Number,
@@ -43,6 +99,11 @@ const orderSchema = new mongoose.Schema(
             type: String,
             enum: Object.values(DELIVERY_PRIORITY),
             default: DELIVERY_PRIORITY.NORMAL
+        },
+
+        proof: {
+            type: Object,
+            default: null
         }
     },
     {

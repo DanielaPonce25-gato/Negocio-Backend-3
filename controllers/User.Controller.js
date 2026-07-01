@@ -1,4 +1,4 @@
-import * as UserService from "../services/UserService.js";
+import * as UserService from "../services/User.Service.js";
 
 
 // Centraliza el manejo de errores

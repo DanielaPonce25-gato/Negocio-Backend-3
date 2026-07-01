@@ -1,4 +1,4 @@
-import * as ProductService from "../services/ProductService.js";
+import * as ProductService from "../services/Product.Service.js";
 
 
 const parseImageUrls = (req) => {  // esta funcion contiene todas las imágenes enviadas en la petición 

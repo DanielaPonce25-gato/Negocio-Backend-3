@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { envConfig } from "../config/env.js";
+import { envConfig } from "./env.js";
+import "../models/Store.js";
 
 const connectDB = async () => {
   const mongoUri = envConfig.mongoUri;

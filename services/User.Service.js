@@ -1,7 +1,8 @@
 // importa todas las funciones del archivo UserRepository.js y las asigna al objeto UserRepository.
 
 import mongoose from "mongoose";
-import * as UserRepository from "../repositories/UserRepository.js";
+import bcrypt from "bcryptjs";
+import * as UserRepository from "../repositories/User.Repository.js";
 import { USER_ROLES, DOCUMENT_TYPES } from "../constants/index.js";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // valida el gmail
@@ -90,9 +91,13 @@ export const createUser = async (userData) => {
         throw new Error("El email ya está registrado.");
     }
 
-    return await UserRepository.createUser(userData); 
-    
-    // llama a la funcion createUser de UserRepository y guarda el usuario en la base de datos
+    const payload = { ...userData };
+    if (payload.password) {
+        const salt = await bcrypt.genSalt(10);
+        payload.password = await bcrypt.hash(payload.password, salt);
+    }
+
+    return await UserRepository.createUser(payload);
 };
 
 export const getUsers = async () => {
@@ -169,7 +174,13 @@ export const updateUser = async (id, data) => {
         data.documents = validateDocuments(data.documents);
     }
 
-    return await UserRepository.updateUser(id, data);
+    const payload = { ...data };
+    if (payload.password) {
+        const salt = await bcrypt.genSalt(10);
+        payload.password = await bcrypt.hash(payload.password, salt);
+    }
+
+    return await UserRepository.updateUser(id, payload);
 
     // llama a la funcion updateUser de UserRepository y actualiza el usuario en la base de datos
 };

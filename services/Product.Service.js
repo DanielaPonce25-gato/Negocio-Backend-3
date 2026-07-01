@@ -1,7 +1,7 @@
 
 // importa todas las funciones del archivo ProductRepository.js y las asigna al objeto ProductRepository.
 
-import * as ProductRepository from "../repositories/ProductRepository.js";
+import * as ProductRepository from "../repositories/Product.Repository.js";
 
 /*
 const ProductRepository = {

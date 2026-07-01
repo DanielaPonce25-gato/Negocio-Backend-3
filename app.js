@@ -1,8 +1,14 @@
 import express from "express";
 import cors from "cors";
 
+import "./models/Store.js";
+
+import { envConfig } from "./config/env.js";
 import productRoutes from "./routes/product.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import orderRoutes from "./routes/order.routes.js";
+import storeRoutes from "./routes/store.routes.js";
+//import mockRoutes from "./routes/mock.routes.js";
 
 const app = express();
 
@@ -18,6 +24,16 @@ app.use("/api/products", productRoutes);
 // Rutas de usuarios
 app.use("/api/users", userRoutes);
 
+// Rutas de ordenes
+app.use("/api/orders", orderRoutes);
+
+// Rutas de tiendas
+app.use("/api/stores", storeRoutes);
+
+if (envConfig.nodeEnv === "development") {
+    // Rutas de mocking solo en desarrollo
+    // app.use("/api/mock", mockRoutes);
+}
 
 app.get("/", (req, res) => {
     res.json({
