@@ -38,5 +38,3 @@ export const generateMockProduct = (sellerId) => {
 };
 
 
-const mock = generateMockProduct('seller123');
-console.log(JSON.stringify(mock, null, 2));

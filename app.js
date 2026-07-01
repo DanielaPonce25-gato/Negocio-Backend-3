@@ -8,7 +8,7 @@ import productRoutes from "./routes/product.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import storeRoutes from "./routes/store.routes.js";
-//import mockRoutes from "./routes/mock.routes.js";
+import mockRoutes from "./routes/mock.routes.js";
 
 const app = express();
 
@@ -30,9 +30,9 @@ app.use("/api/orders", orderRoutes);
 // Rutas de tiendas
 app.use("/api/stores", storeRoutes);
 
+
 if (envConfig.nodeEnv === "development") {
-    // Rutas de mocking solo en desarrollo
-    // app.use("/api/mock", mockRoutes);
+    app.use("/api/mock", mockRoutes);
 }
 
 app.get("/", (req, res) => {
