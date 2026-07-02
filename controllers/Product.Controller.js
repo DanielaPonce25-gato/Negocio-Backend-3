@@ -67,7 +67,7 @@ export const createProduct = async (req, res) => {
         const productData = buildProductPayload(req);  // utilizado del molde
         const product = await ProductService.createProduct(productData);
         return res.status(201).json({ status: "success", data: product });
-    } catch (error) {
+    } catch (err) {
         const error = new Error("Error al crear el producto");
         error.status = 400;
         throw error;
@@ -81,7 +81,7 @@ export const getProducts = async (req, res) => {
     try {
         const products = await ProductService.getProducts();
         return res.status(200).json({ status: "success", data: products });
-    } catch (error) {
+    } catch (err) {
         const error = new Error("Error al obtener los productos");
         error.status = 404;
         throw error;
@@ -95,7 +95,7 @@ export const getProductById = async (req, res) => {
     try {
         const product = await ProductService.getProductById(req.params.id);
         return res.status(200).json({ status: "success", data: product });
-    } catch (error) {
+    } catch (err) {
         const error = new Error("Error al obtener el producto");
         error.status = 404;
         throw error;
@@ -110,7 +110,7 @@ export const updateProduct = async (req, res) => {
         const productData = buildProductPayload(req);
         const product = await ProductService.updateProduct(req.params.id, productData);
         return res.status(200).json({ status: "success", data: product });
-    } catch (error) {
+    } catch (err) {
         const error = new Error("Error al actualizar el producto");
         error.status = 400;
         throw error;
@@ -124,7 +124,7 @@ export const deleteProduct = async (req, res) => {
     try {
         await ProductService.deleteProduct(req.params.id);
         return res.status(200).json({ status: "success", message: "Producto eliminado" });
-    } catch (error) {
+    } catch (err) {
         const error = new Error("Error al eliminar el producto");
         error.status = 400;
         throw error;

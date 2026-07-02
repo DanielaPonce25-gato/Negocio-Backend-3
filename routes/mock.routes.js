@@ -25,7 +25,7 @@ const createMockProducts = (quantity = 6) => {
     return products;
 };
 
-const generateMockStores = (count = 3) => {
+const generateMockStores = (count = 5) => {
     const stores = [];  
 
     for (let i = 0; i < count; i += 1) {
@@ -91,7 +91,7 @@ router.get("/orders", (req, res) => {
 });
 
 router.get("/stores", (req, res) => {
-    const quantity = toNumber(req.query.quantity, 3);
+    const quantity = toNumber(req.query.quantity, 5);
     const stores = generateMockStores(quantity);
 
     res.json({
