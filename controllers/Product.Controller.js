@@ -58,15 +58,6 @@ const buildProductPayload = (req) => {
 };
 
 
-// maneja los errores en el controller 
-
-const handleError = (res, error) => {
-    const status = error.status || 400; 
-    return res.status(status).json({ // Devuelve el código de estado del error o 400 por defecto.
-        status: "error",
-        message: error.message || "Error en la operación con productos"
-    });
-};
 
 
 // creacion del producto
@@ -77,7 +68,9 @@ export const createProduct = async (req, res) => {
         const product = await ProductService.createProduct(productData);
         return res.status(201).json({ status: "success", data: product });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al crear el producto");
+        error.status = 400;
+        throw error;
     }
 };
 
@@ -89,7 +82,9 @@ export const getProducts = async (req, res) => {
         const products = await ProductService.getProducts();
         return res.status(200).json({ status: "success", data: products });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al obtener los productos");
+        error.status = 404;
+        throw error;
     }
 };
 
@@ -101,7 +96,9 @@ export const getProductById = async (req, res) => {
         const product = await ProductService.getProductById(req.params.id);
         return res.status(200).json({ status: "success", data: product });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al obtener el producto");
+        error.status = 404;
+        throw error;
     }
 };
 
@@ -114,7 +111,9 @@ export const updateProduct = async (req, res) => {
         const product = await ProductService.updateProduct(req.params.id, productData);
         return res.status(200).json({ status: "success", data: product });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al actualizar el producto");
+        error.status = 400;
+        throw error;
     }
 };
 
@@ -126,6 +125,8 @@ export const deleteProduct = async (req, res) => {
         await ProductService.deleteProduct(req.params.id);
         return res.status(200).json({ status: "success", message: "Producto eliminado" });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al eliminar el producto");
+        error.status = 400;
+        throw error;
     }
 };

@@ -10,12 +10,16 @@ import orderRoutes from "./routes/order.routes.js";
 import storeRoutes from "./routes/store.routes.js";
 import mockRoutes from "./routes/mock.routes.js";
 
+import errorHandler from "./middleware/MiddlewareGlobal.js";
+
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
+app.use(errorHandler);
 
 
 // Rutas de productos

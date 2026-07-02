@@ -1,19 +1,15 @@
 import * as storeService from "../services/Store.Service.js";
 
-const handleError = (res, error) => {
-    const status = error.status || 400;
-    return res.status(status).json({
-        status: "error",
-        message: error.message || "Error en la operación con tiendas"
-    });
-};
+
 
 export const createStore = async (req, res) => {
     try {
         const store = await storeService.createStore(req.body);
         return res.status(201).json({ status: "success", data: store });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al crear la tienda");
+        error.status = 400;
+        throw error;
     }
 };
 
@@ -22,7 +18,9 @@ export const getStores = async (req, res) => {  // Trae solo tiendas activas
         const stores = await storeService.getStores();
         return res.status(200).json({ status: "success", data: stores });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al obtener las tiendas");
+        error.status = 404;
+        throw error;
     }
 };
 
@@ -34,7 +32,9 @@ export const getStoreById = async (req, res) => {  // Busca una tienda por ID y 
         }
         return res.status(200).json({ status: "success", data: store });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al obtener la tienda");
+        error.status = 404;
+        throw error;
     }
 };
 
@@ -43,7 +43,9 @@ export const getStoresByOwner = async (req, res) => { // Trae todas las tiendas 
         const stores = await storeService.getStoresByOwner(req.params.ownerId);
         return res.status(200).json({ status: "success", data: stores });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al obtener las tiendas del propietario");
+        error.status = 404;
+        throw error;
     }
 };
 
@@ -55,7 +57,9 @@ export const updateStore = async (req, res) => {  // Actualiza una tienda.
         }
         return res.status(200).json({ status: "success", data: store });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al actualizar la tienda");
+        error.status = 400;
+        throw error;
     }
 };
 
@@ -67,6 +71,8 @@ export const deleteStore = async (req, res) => {
         }
         return res.status(200).json({ status: "success", message: "Tienda eliminada" });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al eliminar la tienda");
+        error.status = 400;
+        throw error;
     }
 };

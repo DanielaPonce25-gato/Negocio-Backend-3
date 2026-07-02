@@ -1,20 +1,16 @@
 
 import * as orderService from "../services/Order.Service.js";
 
-const handleError = (res, error) => {
-    const status = error.status || 400;
-    return res.status(status).json({
-        status: "error",
-        message: error.message || "Error en la operación con órdenes"
-    });
-};
+
 
 export const createOrder = async (req, res) => {
     try {
         const order = await orderService.createOrder(req.body);
         return res.status(201).json({ status: "success", data: order });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al crear la orden");
+        error.status = 400;
+        throw error;
     }
 };
 
@@ -23,7 +19,9 @@ export const getOrders = async (req, res) => {
         const orders = await orderService.getOrders();
         return res.status(200).json({ status: "success", data: orders });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al obtener las órdenes");
+        error.status = 404;
+        throw error;
     }
 };
 
@@ -35,7 +33,9 @@ export const getOrderById = async (req, res) => {
         }
         return res.status(200).json({ status: "success", data: order });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al obtener la orden");
+        error.status = 404;
+        throw error;
     }
 };
 
@@ -44,7 +44,9 @@ export const getOrdersByBuyer = async (req, res) => {
         const orders = await orderService.getOrdersByBuyer(req.params.buyerId);
         return res.status(200).json({ status: "success", data: orders });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al obtener las órdenes del comprador");
+        error.status = 404;
+        throw error;
     }
 };
 
@@ -53,7 +55,9 @@ export const getOrdersByStore = async (req, res) => {
         const orders = await orderService.getOrdersByStore(req.params.storeId);
         return res.status(200).json({ status: "success", data: orders });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al obtener las órdenes de la tienda");
+        error.status = 404;
+        throw error;
     }
 };
 
@@ -65,7 +69,9 @@ export const updateOrderStatus = async (req, res) => {
         }
         return res.status(200).json({ status: "success", data: order });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al actualizar el estado de la orden");
+        error.status = 400;
+        throw error;
     }
 };
 
@@ -77,7 +83,9 @@ export const updateOrderPriority = async (req, res) => {
         }
         return res.status(200).json({ status: "success", data: order });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al actualizar la prioridad de la orden");
+        error.status = 400;
+        throw error;
     }
 };
 
@@ -89,7 +97,9 @@ export const updateOrderProof = async (req, res) => {
         }
         return res.status(200).json({ status: "success", data: order });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al actualizar el comprobante de la orden");
+        error.status = 400;
+        throw error;
     }
 };
 
@@ -101,6 +111,8 @@ export const deleteOrder = async (req, res) => {
         }
         return res.status(200).json({ status: "success", message: "Orden eliminada" });
     } catch (error) {
-        return handleError(res, error);
+        const error = new Error("Error al eliminar la orden");
+        error.status = 400;
+        throw error;
     }
 };

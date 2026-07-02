@@ -7,3 +7,5 @@ node Mocking/runOrderMock.js
 
 
 node Mocking/runUserMock.js
+
+node Mocking/runStoresMock.js
