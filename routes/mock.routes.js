@@ -12,7 +12,7 @@ const toNumber = (value, fallback = 3) => {
 };
 
 
-const createMockProducts = (quantity = 6) => {
+const createMockProducts = (quantity = 3) => {
     const products = [];
 
     for (let index = 0; index < quantity; index += 1) {
@@ -25,7 +25,7 @@ const createMockProducts = (quantity = 6) => {
     return products;
 };
 
-const generateMockStores = (count = 5) => {
+const generateMockStores = (count = 3) => {
     const stores = [];  
 
     for (let i = 0; i < count; i += 1) {
@@ -36,7 +36,7 @@ const generateMockStores = (count = 5) => {
     return stores;
 };
 
-const createMockOrders = (quantity = 6, products = []) => {
+const createMockOrders = (quantity = 3, products = []) => {
     const orders = [];
 
     for (let index = 0; index < quantity; index += 1) {
@@ -50,7 +50,7 @@ const createMockOrders = (quantity = 6, products = []) => {
 
 
 router.get("/", (req, res) => {
-    const quantity = toNumber(req.query.quantity, 6);
+    const quantity = toNumber(req.query.quantity, 3);
     const products = createMockProducts(quantity);
 
     res.json({

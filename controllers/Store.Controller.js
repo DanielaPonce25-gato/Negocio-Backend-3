@@ -1,78 +1,103 @@
 import * as storeService from "../services/Store.Service.js";
+import { apiResponse } from "../utils/apiResponse.js";
 
 
-
-export const createStore = async (req, res) => {
+export const createStore = async (req, res, next) => {
     try {
         const store = await storeService.createStore(req.body);
-        return res.status(201).json({ status: "success", data: store });
+        
+        return apiResponse(res, {
+            statusCode: 201, 
+            message: "Tienda creada exitosamente",
+            payload: store
+        });
+
     } catch (err) {
-        const error = new Error("Error al crear la tienda");
-        error.status = 400;
-        throw error;
+        next(err); // Pasa el error al middleware de manejo de errores
     }
 };
 
-export const getStores = async (req, res) => {  // Trae solo tiendas activas
+export const getStores = async (req, res, next) => {  // Trae solo tiendas activas
     try {
         const stores = await storeService.getStores();
-        return res.status(200).json({ status: "success", data: stores });
+
+        return apiResponse(res, {
+            statusCode: 200,
+            message: "Tiendas obtenidas exitosamente", 
+            payload: stores
+        });
+
     } catch (err) {
-        const error = new Error("Error al obtener las tiendas");
-        error.status = 404;
-        throw error;
+        next(err);
     }
 };
 
-export const getStoreById = async (req, res) => {  // Busca una tienda por ID y trae los datos del owner.
+export const getStoreById = async (req, res, next) => {  // Busca una tienda por ID y trae los datos del owner.
     try {
         const store = await storeService.getStoreById(req.params.id);
         if (!store) {
             return res.status(404).json({ status: "error", message: "Tienda no encontrada" });
         }
-        return res.status(200).json({ status: "success", data: store });
+
+        return apiResponse(res, {
+            statusCode: 200,
+            message: "Tienda obtenida exitosamente", 
+            payload: store
+        });
+
     } catch (err) {
-        const error = new Error("Error al obtener la tienda");
-        error.status = 404;
-        throw error;
+        next(err);
     }
 };
 
-export const getStoresByOwner = async (req, res) => { // Trae todas las tiendas de un usuario específico.
+export const getStoresByOwner = async (req, res, next) => { // Trae todas las tiendas de un usuario específico.
     try {
         const stores = await storeService.getStoresByOwner(req.params.ownerId);
-        return res.status(200).json({ status: "success", data: stores });
+
+        return apiResponse(res, {
+            statusCode: 200,
+            message: "Tiendas del propietario obtenidas exitosamente", 
+            payload: stores
+        });
+
     } catch (err) {
-        const error = new Error("Error al obtener las tiendas del propietario");
-        error.status = 404;
-        throw error;
+        next(err);
     }
 };
 
-export const updateStore = async (req, res) => {  // Actualiza una tienda.
+export const updateStore = async (req, res, next) => {  // Actualiza una tienda.
     try {
         const store = await storeService.updateStore(req.params.id, req.body);
         if (!store) {
             return res.status(404).json({ status: "error", message: "Tienda no encontrada" });
         }
-        return res.status(200).json({ status: "success", data: store });
+
+        return apiResponse(res, {
+            statusCode: 200,
+            message: "Tienda actualizada exitosamente", 
+            payload: store
+        });
+
     } catch (err) {
-        const error = new Error("Error al actualizar la tienda");
-        error.status = 400;
-        throw error;
+        next(err);
     }
 };
 
-export const deleteStore = async (req, res) => {
+export const deleteStore = async (req, res, next) => {
     try {
         const deleted = await storeService.deleteStore(req.params.id);
         if (!deleted) {
             return res.status(404).json({ status: "error", message: "Tienda no encontrada" });
         }
-        return res.status(200).json({ status: "success", message: "Tienda eliminada" });
+
+        return apiResponse(res, {
+            statusCode: 200,
+            message: "Tienda eliminada exitosamente", 
+            payload: null
+        });
+
+
     } catch (err) {
-        const error = new Error("Error al eliminar la tienda");
-        error.status = 400;
-        throw error;
+        next(err);
     }
 };

@@ -1,5 +1,5 @@
 import * as ProductService from "../services/Product.Service.js";
-
+import { apiResponse } from "../utils/apiResponse.js";
 
 const parseImageUrls = (req) => {  // esta funcion contiene todas las imágenes enviadas en la petición 
     
@@ -62,71 +62,91 @@ const buildProductPayload = (req) => {
 
 // creacion del producto
 
-export const createProduct = async (req, res) => {
+export const createProduct = async (req, res, next) => {
     try {
         const productData = buildProductPayload(req);  // utilizado del molde
         const product = await ProductService.createProduct(productData);
-        return res.status(201).json({ status: "success", data: product });
+
+        return apiResponse(res, {
+            statusCode: 201,  // Código de estado HTTP para "Creado"
+            message: "Producto creado exitosamente", 
+            payload: product
+        });
+
     } catch (err) {
-        const error = new Error("Error al crear el producto");
-        error.status = 400;
-        throw error;
+        next(err); // Pasa el error al middleware de manejo de errores
     }
 };
 
 
 // ver lista de productos
 
-export const getProducts = async (req, res) => { 
+export const getProducts = async (req, res, next) => { 
     try {
         const products = await ProductService.getProducts();
-        return res.status(200).json({ status: "success", data: products });
+
+        return apiResponse(res, {
+            statusCode: 200,  // Código de estado HTTP para "OK"
+            message: "Productos obtenidos exitosamente",
+            payload: products
+        });
+
     } catch (err) {
-        const error = new Error("Error al obtener los productos");
-        error.status = 404;
-        throw error;
+        next(err); 
     }
 };
 
 
 // ver un producto por ID
 
-export const getProductById = async (req, res) => {
+export const getProductById = async (req, res, next) => {
     try {
         const product = await ProductService.getProductById(req.params.id);
-        return res.status(200).json({ status: "success", data: product });
+
+        return apiResponse(res, {
+            statusCode: 200,  
+            message: "Producto obtenido exitosamente", 
+            payload: product
+        });
+
     } catch (err) {
-        const error = new Error("Error al obtener el producto");
-        error.status = 404;
-        throw error;
+        next(err);
     }
 };
 
 
 // actualizar un producto por ID
 
-export const updateProduct = async (req, res) => {
+export const updateProduct = async (req, res, next) => {
     try {
         const productData = buildProductPayload(req);
         const product = await ProductService.updateProduct(req.params.id, productData);
-        return res.status(200).json({ status: "success", data: product });
+
+        return apiResponse(res, {
+            statusCode: 200,
+            message: "Producto actualizado exitosamente", 
+            payload: product
+        });
+    
     } catch (err) {
-        const error = new Error("Error al actualizar el producto");
-        error.status = 400;
-        throw error;
+        next(err); 
     }
 };
 
 
 // eliminar un producto por ID
 
-export const deleteProduct = async (req, res) => {
+export const deleteProduct = async (req, res, next) => {
     try {
         await ProductService.deleteProduct(req.params.id);
-        return res.status(200).json({ status: "success", message: "Producto eliminado" });
+
+        return apiResponse(res, {
+            statusCode: 200,
+            message: "Producto eliminado exitosamente", 
+            payload: null
+        });
+
     } catch (err) {
-        const error = new Error("Error al eliminar el producto");
-        error.status = 400;
-        throw error;
+        next(err);
     }
 };

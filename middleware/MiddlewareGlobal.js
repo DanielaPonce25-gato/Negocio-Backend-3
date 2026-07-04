@@ -1,13 +1,23 @@
+
+import { apiErrorResponse , createError } from "../utils/apiResponse.js";
+
 // middleware que centra los errores de la api
 
 const errorHandler = (err, req, res, next) => {
-    console.error("Error:", err);
+    
+    let handledError = err;
 
-    res.status(err.status || 500).json({
-        status: "error",
-        controller: req.baseUrl, // muestra desde qué ruta vino
-        message: err.message || "Ocurrió un error inesperado"
-    });
-};
+    // Si nos envian un id de mongodb invalido
+    if (handledError.name === "CastError") {
+        handledError = createError("VALIDATION_ERROR", "ID invalido");
+    }
+
+    return apiErrorResponse(res,
+        handledError.statusCode || 500,
+        handledError.message || "Error interno del servidor",
+        handledError.code || "INTERNAL_SERVER_ERROR"
+    );
+}
+
 
 export default errorHandler;

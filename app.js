@@ -11,6 +11,7 @@ import storeRoutes from "./routes/store.routes.js";
 import mockRoutes from "./routes/mock.routes.js";
 
 import errorHandler from "./middleware/MiddlewareGlobal.js";
+import { notFoundHandler } from "./middleware/INVALID_ROUTE.js";
 
 
 const app = express();
@@ -54,12 +55,17 @@ app.get("/health", (req, res) => {
 });
 
 
+/*
 app.use((req, res) => {
     res.status(404).json({
         status: "error",
         message: "Ruta no encontrada"
     });
 });
+*/
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 
 export default app;
