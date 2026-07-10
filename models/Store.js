@@ -34,9 +34,9 @@ const storeSchema = new mongoose.Schema(
             default: ""
         },
 
-        image: {
-            type: String,
-            default: ""
+        images: {
+            type: [String],
+            default: []
         },
 
         isActive: {

@@ -35,6 +35,28 @@ const validateStringField = (value, fieldName, { required = false, max = 200 } =
     return value;
 };
 
+const validateAddresses = (addresses) => {
+    if (!Array.isArray(addresses)) {
+        throw new Error("Las direcciones deben ser un arreglo.");
+    }
+    if (addresses.length === 0) {
+        throw new Error("Debe proporcionar al menos una dirección.");
+    }
+
+    addresses.forEach((addr, index) => {
+        if (!addr.label || !addr.address) {
+            throw new Error(`La dirección ${index + 1} debe tener label y address.`);
+        }
+        if (!["home", "work"].includes(addr.label)) {
+            throw new Error(`El label de la dirección ${index + 1} debe ser 'home' o 'work'.`);
+        }
+        if (typeof addr.address !== "string" || addr.address.trim().length === 0) {
+            throw new Error(`La dirección ${index + 1} debe ser una cadena de texto no vacía.`);
+        }
+    });
+    return addresses;
+};
+
 const validateDocuments = (documents) => {
     if (!Array.isArray(documents)) {
         throw new Error("Los documentos deben ser un arreglo.");
@@ -67,7 +89,7 @@ export const createUser = async (userData) => {
     userData.firstName = validateStringField(userData.firstName, "nombre", { required: true, max: 100 });
     userData.lastName = validateStringField(userData.lastName, "apellido", { required: true, max: 100 });
     userData.email = validateStringField(userData.email, "email", { required: true, max: 200 });
-    userData.address = validateStringField(userData.address, "dirección", { required: true, max: 200 });
+    userData.addresses = validateAddresses(userData.addresses || []);
 
     if (!emailRegex.test(userData.email)) {
         throw new Error("El email no es válido.");
@@ -156,8 +178,8 @@ export const updateUser = async (id, data) => {
         data.lastName = validateStringField(data.lastName, "apellido", { required: true, max: 100 });
     }
 
-    if (data.address !== undefined) {
-        data.address = validateStringField(data.address, "dirección", { required: true, max: 200 });
+    if (data.addresses !== undefined) {
+        data.addresses = validateAddresses(data.addresses);
     }
 
     if (data.password !== undefined) {

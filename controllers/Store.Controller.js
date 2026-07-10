@@ -1,10 +1,65 @@
 import * as storeService from "../services/Store.Service.js";
 import { apiResponse } from "../utils/apiResponse.js";
 
+const parseImageUrls = (req) => {
+    const images = [];
+
+    // Procesa URLs
+
+    const addUrls = (raw) => {
+        if (Array.isArray(raw)) { 
+
+                // Convierte string y elimina los espacios con .trim
+            images.push(...raw.map((url) => String(url).trim()).filter(Boolean));
+        } else if (typeof raw === "string") {
+            images.push(
+                ...String(raw)
+                    .split(",")
+                    .map((url) => url.trim())
+                    .filter(Boolean)
+            );
+        }
+    };
+
+
+
+    if (req.body?.imageUrls) {
+        addUrls(req.body.imageUrls);
+    }
+
+    if (req.body?.images && req.body?.imageUrls === undefined) {
+        addUrls(req.body.images);
+    }
+
+    if (req.files?.length) {
+        const uploadedUrls = req.files.map((file) => {
+            const host = req.get("host");
+            const protocol = req.protocol;
+            return `${protocol}://${host}/uploads/${file.filename}`;
+        });
+
+        images.push(...uploadedUrls);
+    }
+
+    return images;
+};
+
+export const buildStorePayload = (req) => {
+    const { owner, name, description, address, phone, email, isActive } = req.body;
+    const payload = { owner, name, description, address, phone, email, isActive };
+
+    const imageUrls = parseImageUrls(req);
+    if (imageUrls.length) {
+        payload.images = imageUrls;
+    }
+
+    return payload;
+};
 
 export const createStore = async (req, res, next) => {
     try {
-        const store = await storeService.createStore(req.body);
+        const storeData = buildStorePayload(req);
+        const store = await storeService.createStore(storeData);
         
         return apiResponse(res, {
             statusCode: 201, 
@@ -67,7 +122,8 @@ export const getStoresByOwner = async (req, res, next) => { // Trae todas las ti
 
 export const updateStore = async (req, res, next) => {  // Actualiza una tienda.
     try {
-        const store = await storeService.updateStore(req.params.id, req.body);
+        const storeData = buildStorePayload(req);
+        const store = await storeService.updateStore(req.params.id, storeData);
         if (!store) {
             return res.status(404).json({ status: "error", message: "Tienda no encontrada" });
         }

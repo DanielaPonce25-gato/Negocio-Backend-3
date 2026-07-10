@@ -1,11 +1,21 @@
 
 import { ERROR_DICTIONARY } from "./errorDictionary.js";
 
-export function apiResponse(res, statusCode = 200, message, data = null) {
+export function apiResponse(res, statusCodeOrOptions = 200, message, data = null) {
+    let statusCode = statusCodeOrOptions;
+    let payload = data;
+
+    if (typeof statusCodeOrOptions === "object" && statusCodeOrOptions !== null) {
+        const options = statusCodeOrOptions;
+        statusCode = options.statusCode ?? 200;
+        message = options.message;
+        payload = options.payload ?? options.data ?? null;
+    }
+
     return res.status(statusCode).json({
         status: "success",
         message,
-        payload: data
+        payload
     });
 }
 

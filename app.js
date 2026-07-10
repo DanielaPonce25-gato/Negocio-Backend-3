@@ -9,9 +9,12 @@ import userRoutes from "./routes/user.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import storeRoutes from "./routes/store.routes.js";
 import mockRoutes from "./routes/mock.routes.js";
+import vistaRoutes from "./routes/views.routes.js";
 
 import errorHandler from "./middleware/MiddlewareGlobal.js";
 import { notFoundHandler } from "./middleware/INVALID_ROUTE.js";
+
+
 
 
 const app = express();
@@ -20,7 +23,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
-app.use(errorHandler);
+app.use("/css", express.static("css"));
+app.use("/tools", express.static("tools"));
+
 
 
 // Rutas de productos
@@ -36,11 +41,14 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/stores", storeRoutes);
 
 
+app.use("/", vistaRoutes);
+
 if (envConfig.nodeEnv === "development") {
-    app.use("/api/mock", mockRoutes);
+    app.use("/api/mocks", mockRoutes);
 }
 
-app.get("/", (req, res) => {
+
+app.get("/api", (req, res) => {
     res.json({
         status: "success",
         message: "ShipNow API"

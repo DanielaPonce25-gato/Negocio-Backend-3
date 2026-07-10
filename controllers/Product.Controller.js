@@ -114,6 +114,21 @@ export const getProductById = async (req, res, next) => {
     }
 };
 
+export const getCategories = async (req, res, next) => {
+    try {
+        const categories = await ProductService.getProductCategories();
+
+        return apiResponse(res, {
+            statusCode: 200,
+            message: "Categorías obtenidas exitosamente",
+            payload: categories
+        });
+
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 // actualizar un producto por ID
 

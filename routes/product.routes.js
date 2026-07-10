@@ -31,6 +31,9 @@ router.post("/", upload.array("images", 5), productController.createProduct);
 // Ruta para obtener todos los productos
 router.get("/", productController.getProducts);
 
+// Ruta para obtener las categorías de productos
+router.get("/categories", productController.getCategories);
+
 // Ruta para obtener un producto por su ID
 router.get("/:id", productController.getProductById);
 

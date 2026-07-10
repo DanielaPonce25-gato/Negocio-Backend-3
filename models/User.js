@@ -2,6 +2,30 @@
 import mongoose from "mongoose";
 import { USER_ROLES, DOCUMENT_TYPES } from "../constants/index.js";
 
+
+const addressSchema = new mongoose.Schema(
+    {
+        label: {
+            type: String,
+            enum: ["home", "work"],
+            required: true
+        },
+
+        address: {
+            type: String,
+            required: true
+        },
+
+        reference: {
+            type: String,
+            default: ""
+        }
+    },
+    {
+        _id: false
+    }
+);
+
 const userSchema = new mongoose.Schema(
     {
         firstName: {
@@ -20,9 +44,10 @@ const userSchema = new mongoose.Schema(
             unique: true
         },
 
-        address: {
-            type: String,
-            required: true
+        addresses: {
+            type: [addressSchema],
+            required: true,
+            default: []
         },
 
         password: {

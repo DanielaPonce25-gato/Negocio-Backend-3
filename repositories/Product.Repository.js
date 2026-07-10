@@ -19,6 +19,10 @@ export const getProducts = async () => {
     return await Product.find().populate("seller", "firstName lastName email");
 };
 
+export const getProductCategories = async () => {
+    return await Product.distinct("category");
+};
+
 
 // Obtiene un producto por su ID de la base de datos.
 // si no lo encuentra, devuelve null.

@@ -24,6 +24,10 @@ export const createProduct = async (productData) => {
         throw new Error("El producto debe tener título y precio.");
     }
 
+    if (!productData.seller) {
+        throw new Error("Se requiere un usuario registrado para crear el producto.");
+    }
+
     if (productData.price < 0) {
         throw new Error("El precio no puede ser negativo.");
     }
@@ -37,6 +41,10 @@ export const getProducts = async () => {
     return await ProductRepository.getProducts(); 
     
     // llama a la funcion getProducts de ProductRepository y visualiza los productos de la base de datos
+};
+
+export const getProductCategories = async () => {
+    return await ProductRepository.getProductCategories();
 };
 
 export const getProductById = async (id) => {
