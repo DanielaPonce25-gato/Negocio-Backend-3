@@ -10,7 +10,9 @@ export const generateMockStore = (ownerId, email) => {
         address: faker.location.streetAddress(),
         phone: faker.phone.number(),
         email,
-        images: [],
+        images: [
+            `https://picsum.photos/seed/${faker.string.uuid()}/300/300`
+        ],
         isActive: true
     };
 

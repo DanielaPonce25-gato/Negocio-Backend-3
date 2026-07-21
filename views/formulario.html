@@ -75,13 +75,52 @@
             <option value="">Seleccione un rol</option>
             <option value="customer">Cliente</option>
             <option value="driver">Repartidor</option>
-            <option value="store">Tienda</option>
             <option value="admin">Administrador</option>
         </select>
 
-        <label for="profileImage">Foto de perfil (opcional)</label>
-        <input type="file" id="profileImage" name="profileImage" accept="image/*">
-        <small>Formatos aceptados: JPG, PNG, WebP, GIF (máx 5MB)</small>
+        <label for="documentType">Tipo de documento</label>
+
+        <select id="documentType" name="documentType">
+            <option value="">Seleccione un documento</option>
+            <option value="user_document">Documento de identidad</option>
+            <option value="driver_license">Licencia de conducir</option>
+            <option value="delivery_proof">Comprobante de entrega</option>
+        </select>
+
+        
+        <label>Foto de perfil (opcional)</label>
+
+        <div class="image-options">
+
+            <div class="image-option">
+                <label for="profileImage">
+                    Subir imagen desde la computadora
+                </label>
+
+                <input
+                    type="file"
+                    id="profileImage"
+                    name="images"
+                    accept="image/png,image/jpeg,image/webp,image/gif">
+
+                <small>Formatos: JPG, PNG, WebP y GIF</small>
+            </div>
+
+            <hr>
+
+            <div class="image-option">
+                <label for="imageUrl">
+                    O ingresar una URL de imagen
+                </label>
+
+                <input
+                    type="url"
+                    id="imageUrl"
+                    name="imageUrl"
+                    placeholder="https://ejemplo.com/foto.jpg">
+            </div>
+
+        </div>
 
         <button type="submit">
             Registrar
@@ -93,15 +132,18 @@
         Esperando respuesta...
     </div>
 
-    <button type="button"><link rel="stylesheet" href="/views/"></button>
+    <div class="acciones">
 
-    <button type="button"><link rel="stylesheet" href="/views/home.html"></button>
+        <button type="button" onclick="location.href='/login'">
+            Ir al Login
+        </button>
+
+        <button type="button" onclick="location.href='/'">
+            Volver al Inicio
+        </button>
+
+    </div>
 
 </div>
-
-<script>
-
-</script>
-
 </body>
 </html>

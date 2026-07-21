@@ -14,6 +14,7 @@ import vistaRoutes from "./routes/views.routes.js";
 import errorHandler from "./middleware/MiddlewareGlobal.js";
 import { notFoundHandler } from "./middleware/INVALID_ROUTE.js";
 
+import { addLogger } from "./middleware/logger.middleware.js";
 
 
 
@@ -26,6 +27,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/css", express.static("css"));
 app.use("/tools", express.static("tools"));
 
+app.use(addLogger);
 
 
 // Rutas de productos

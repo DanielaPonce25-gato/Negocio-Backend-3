@@ -1,8 +1,11 @@
 
 import { faker } from "@faker-js/faker";
 import { USER_ROLES } from "../constants/USER_ROLES.js";
+import { DOCUMENT_TYPES } from"../constants/DOCUMENT_TYPES.js";
 
 const roles = Object.values(USER_ROLES);
+
+const documento = Object.values(DOCUMENT_TYPES)
 
 /**
  * Repository - Generador de datos mock para usuarios
@@ -21,7 +24,9 @@ export const generateMockUser = () => {
                 reference: faker.location.secondaryAddress()
             }
         ],
-        role: faker.helpers.arrayElement(roles)
+        role: faker.helpers.arrayElement(roles),
+
+        documents: faker.helpers.arrayElement(documento)
     };
 };
 

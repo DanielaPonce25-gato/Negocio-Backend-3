@@ -4,12 +4,17 @@ import { faker } from "@faker-js/faker";
 
 const categories = [
     "Ropa",
-    "Electrónica",
+    "Eletródomesticos",
     "Hogar",
+    "libros",
     "Deportes",
+    "Tecnologia",
     "Belleza",
+    "Perfumeria",
     "Juguetes",
-    "Alimentos"
+    "Alimentos",
+    "Alimento de Mascota",
+    "Juguetes para Mascotas"
 ];
 
 /**

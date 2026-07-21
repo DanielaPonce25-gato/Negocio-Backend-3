@@ -38,6 +38,11 @@ const userSchema = new mongoose.Schema(
             required: true
         },
 
+        images: {
+            type: [String],
+            default: []
+        },        
+
         email: {
             type: String,
             required: true,
@@ -68,7 +73,9 @@ const userSchema = new mongoose.Schema(
         documents: {
             type: [{ type: String, enum: Object.values(DOCUMENT_TYPES) }],
             default: []
-        }
+        },
+
+
     },
     {
         timestamps: true,

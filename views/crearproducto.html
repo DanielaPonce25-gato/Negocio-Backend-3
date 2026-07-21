@@ -20,7 +20,7 @@
             <label for="title">Título</label>
             <input type="text" id="title" name="title" required>
 
-            <label for="description">Descripción</label>
+            <label for="description">Description</label>
             <textarea id="description" name="description" rows="4" required></textarea>
 
             <label for="price">Precio</label>
@@ -30,7 +30,21 @@
             <input type="number" id="stock" name="stock" min="0" value="1" required>
 
             <label for="category">Categoría</label>
-            <input type="text" id="category" name="category" required>
+            <select id="category" name="category" required>
+                <option value="">Seleccione una categoría</option>
+                <option value="Ropa">Ropa</option>
+                <option value="Eletródomesticos">Eletródomesticos</option>
+                <option value="Hogar">Hogar</option>
+                <option value="Libros">Libros</option>
+                <option value="Deportes">Deportes</option>
+                <option value="Tecnologia">Tecnología</option>
+                <option value="Belleza">Belleza</option>
+                <option value="Perfumeria">Perfumería</option>
+                <option value="Juguetes">Juguetes</option>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Alimento de Mascota">Alimento de Mascota</option>
+                <option value="Juguetes para Mascotas">Juguetes para Mascotas</option>
+            </select>
 
             <label for="imageUrls">URLs de imágenes (opcional)</label>
             <input type="text" id="imageUrls" name="imageUrls" placeholder="https://img1.com, https://img2.com">

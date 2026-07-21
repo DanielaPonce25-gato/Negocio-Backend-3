@@ -5,10 +5,13 @@ body {
 }
 
 .container {
-    width: 400px;
-    margin: 50px auto;
+    width: 350px;
+    margin: 50px 45px;
     background: rgb(204, 255, 237);
-    padding: 25px;
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-top: 4px;
+    padding-bottom: 10px;
     border-radius: 10px;
     box-shadow: 0 0 20px #0b5ed7;
 }
@@ -16,37 +19,39 @@ body {
 h2 {
     font-family: cursive;
     text-align: center;
+    font-size: 25px;
     padding-bottom: 5px;
 }
 
 label {
     display: block;
-    margin-top: 12px;
+    margin-top: 15px;
     font-weight: bold;
 }
 
-small {
-    display: block;
-    margin-top: 4px;
-    font-size: 12px;
-    color: #666;
-}
 
 input[type="file"] {
-    padding: 8px;
+    padding: 10px;
 }
-
 
 input,
 select {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 7px;
+    border: 2px solid #ccc;
     box-sizing: border-box;
     font-family: monospace;
     font-size: 17px;
+}
+
+
+small {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #666;
 }
 
 
@@ -55,11 +60,11 @@ button {
     margin-top: 20px;
     padding: 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 7px;
     background: #0d6efd;
     text-decoration: solid;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
 }
 
@@ -73,11 +78,373 @@ button:hover {
     margin-top: 20px;
     padding: 10px;
     font-family: Cambria;
+    font-size: 18px;
     background: #e2e7ec;
     border-radius: 5px;
     min-height: 30px;
 }
 
-@media (min-width:200px) and (max-width:499px) {
-    
+
+
+@media (min-width: 230px) and (max-width:499px){
+
+    *{
+        box-sizing: border-box;
+        font-size: 15px;
+    }
+
+    .container{
+        width: 400px;
+        margin: 30px 0px;
+        padding: 20px 15px;
+    }
+
+    h2{
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    label{
+        font-size: 22px;
+    }
+
+    input,
+    select{
+        font-size: 23px;
+    }
+
+
+    input[type="file"]{
+        padding: 15px;
+    }
+
+    small{
+        margin-top: 10px;
+        font-size: 18px;
+    }
+
+    button{
+        padding: 20px;
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    #respuesta{
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 12px;
+        font-size: 20px;
+    }
+
+}
+
+
+@media (min-width: 501px) and (max-width:768px){
+
+    *{
+        box-sizing: border-box;
+        font-size: 20px;
+    }
+
+    .container {
+        width: 400px;
+        padding-left: 26px;
+        padding-right: 26px;
+        padding-top: 14px;
+        padding-bottom: 40px;
+        border-radius: 13px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h2 {
+        font-size: 30px;
+        padding-bottom: 5px;
+        font-family: 'Courier New';
+        color: #752e2e;
+    }
+
+    label {
+        font-size: 20px;
+    }
+
+
+    input[type="file"] {
+        padding: 10px;
+    }
+
+    input,
+    select {
+        font-size: 18px;
+    }
+
+
+    small {
+        margin-top: 12px;
+        font-size: 16px;
+    }
+
+
+    button {
+        margin-top: 40px;
+        padding: 16px;
+        border-radius: 9px;
+    }
+
+
+    #respuesta {
+        margin-top: 30px;
+        padding: 10px;
+        font-size: 20px;
+        border-radius: 10px;
+    }
+
+
+
+}
+
+
+@media (min-width:769px) and (max-width:1000px){
+
+    *{
+        font-size: 23px;
+    }
+
+    .container {
+        width: 500px;
+        padding-left: 32px;
+        padding-right: 32px;
+        padding-top: 15px;
+        padding-bottom: 25px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h2 {
+        font-size: 35px;
+        font-family: 'Courier New';
+        color: #752e2e;
+    }
+
+    label {
+        font-size: 23px;
+    }
+
+
+    input[type="file"] {
+        padding: 15px;
+    }
+
+    input,
+    select {
+        font-size: 20px;
+    }
+
+
+    small {
+        padding-top: 13px;
+        font-size: 18px;
+    }
+
+
+    button {
+        margin-top: 40px;
+        padding: 20px;
+        border-radius: 12px;
+        font-size: 22px;
+    }
+
+
+    #respuesta {
+        margin-top: 30px;
+        padding: 20px;
+        font-size: 22px;
+        border-radius: 13px;
+    }
+
+
+}
+
+
+@media (min-width:1001px) and (max-width:1200px){
+
+    *{
+        font-size: 20px;
+    }
+
+    .container {
+        width: 600px;
+        padding-left: 32px;
+        padding-right: 32px;
+        padding-top: 5px;
+        padding-bottom: 30px;
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 0 40px #0b5ed7;
+    }
+
+    h2 {
+        font-size: 38px;
+        font-family: 'Courier New';
+        color: #752e2e;
+    }
+
+    label {
+        font-size: 25px;
+    }
+
+
+    input[type="file"] {
+        padding: 20px;
+    }
+
+    input,
+    select {
+        font-size: 22px;
+    }
+
+
+    small {
+        padding-top: 15px;
+        font-size: 20px;
+    }
+
+
+    button {
+        margin-top: 40px;
+        padding: 20px;
+        border-radius: 12px;
+        font-size: 25px;
+    }
+
+
+    #respuesta {
+        margin-top: 30px;
+        padding: 20px;
+        font-size: 24px;
+        border-radius: 15px;
+    }
+
+
+}
+
+
+@media (min-width:1201px) and (max-width:1400px){
+
+    *{
+        font-size: 20px;
+    }
+
+    .container {
+        width: 600px;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-top: 20px;
+        padding-bottom: 40px;
+        margin-top: 60px;
+        margin-left: 22%;
+        box-shadow: 0 0 60px #0b5ed7;
+    }
+
+    h2 {
+        font-size: 40px;
+        font-family: 'Courier New';
+        color: #752e2e;
+    }
+
+    label {
+        font-size: 27px;
+    }
+
+
+    input[type="file"] {
+        padding: 20px;
+    }
+
+    input,
+    select {
+        font-size: 24px;
+    }
+
+
+    small {
+        padding-top: 15px;
+        font-size: 20px;
+    }
+
+
+    button {
+        margin-top: 40px;
+        padding: 20px;
+        border-radius: 12px;
+        font-size: 27px;
+    }
+
+
+    #respuesta {
+        margin-top: 30px;
+        padding: 20px;
+        font-size: 25px;
+        border-radius: 15px;
+    }
+
+
+}
+
+@media (min-width: 1401px) {
+
+    *{
+        font-size: 20px;
+    }
+
+    .container {
+        width: 600px;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-top: 20px;
+        padding-bottom: 40px;
+        margin-top: 60px;
+        margin-left: 22%;
+        box-shadow: 0 0 60px #0b5ed7;
+    }
+
+    h2 {
+        font-size: 40px;
+        font-family: 'Courier New';
+        color: #752e2e;
+    }
+
+    label {
+        font-size: 27px;
+    }
+
+    input[type="file"] {
+        padding: 20px;
+    }
+
+    input,
+    select {
+        font-size: 24px;
+    }
+
+    small {
+        padding-top: 15px;
+        font-size: 20px;
+    }
+
+    button {
+        margin-top: 40px;
+        padding: 20px;
+        border-radius: 12px;
+        font-size: 27px;
+    }
+
+    #respuesta {
+        margin-top: 30px;
+        padding: 20px;
+        font-size: 25px;
+        border-radius: 15px;
+    }
+
 }

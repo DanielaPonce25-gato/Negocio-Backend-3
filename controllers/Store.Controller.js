@@ -58,8 +58,13 @@ export const buildStorePayload = (req) => {
 
 export const createStore = async (req, res, next) => {
     try {
+
+        req.logger.info("Intentando crear tienda");
+
         const storeData = buildStorePayload(req);
         const store = await storeService.createStore(storeData);
+    
+        req.logger.info(`Tienda creada correctamente: ${store.name}`);
         
         return apiResponse(res, {
             statusCode: 201, 
@@ -68,13 +73,21 @@ export const createStore = async (req, res, next) => {
         });
 
     } catch (err) {
+
+        req.logger.error(`Error crear la tienda: ${err.message}`);
+
         next(err); // Pasa el error al middleware de manejo de errores
     }
 };
 
 export const getStores = async (req, res, next) => {  // Trae solo tiendas activas
     try {
+
+        req.logger.info("Obteniendo lista de tiendas");
+
         const stores = await storeService.getStores();
+
+        req.logger.info(`Tiendas obtenidas: ${stores.length}`);
 
         return apiResponse(res, {
             statusCode: 200,
@@ -83,16 +96,31 @@ export const getStores = async (req, res, next) => {  // Trae solo tiendas activ
         });
 
     } catch (err) {
+
+        req.logger.error(`Error al obtener tiendas: ${err.message}`);
+
         next(err);
     }
 };
 
 export const getStoreById = async (req, res, next) => {  // Busca una tienda por ID y trae los datos del owner.
     try {
+
+        req.logger.info(`Buscando tienda id: ${req.params.id}`);
+
         const store = await storeService.getStoreById(req.params.id);
+
         if (!store) {
-            return res.status(404).json({ status: "error", message: "Tienda no encontrada" });
+
+            req.logger.warning(`Tienda no encontrada id: ${req.params.id}`);
+
+            return res.status(404).json({ 
+                status: "error", 
+                message: "Tienda no encontrada" 
+            });
         }
+
+        req.logger.info(`Tienda encontrada: ${store.name}`);
 
         return apiResponse(res, {
             statusCode: 200,
@@ -101,13 +129,21 @@ export const getStoreById = async (req, res, next) => {  // Busca una tienda por
         });
 
     } catch (err) {
+
+        req.logger.error(`Error al buscar tienda: ${err.message}`);
+
         next(err);
     }
 };
 
 export const getStoresByOwner = async (req, res, next) => { // Trae todas las tiendas de un usuario específico.
     try {
+
+        req.logger.info(`Buscando tiendas del propietario: ${req.params.ownerId}`);
+
         const stores = await storeService.getStoresByOwner(req.params.ownerId);
+
+        req.logger.info(`Tiendas encontradas: ${stores.length}`);
 
         return apiResponse(res, {
             statusCode: 200,
@@ -115,18 +151,34 @@ export const getStoresByOwner = async (req, res, next) => { // Trae todas las ti
             payload: stores
         });
 
+
     } catch (err) {
+
+        req.logger.error(`Error al buscar tiendas del propietario: ${err.message}`);
+
         next(err);
     }
 };
 
 export const updateStore = async (req, res, next) => {  // Actualiza una tienda.
     try {
+
+        req.logger.info(`Actualizando tienda id: ${req.params.id}`);
+
         const storeData = buildStorePayload(req);
         const store = await storeService.updateStore(req.params.id, storeData);
+
         if (!store) {
-            return res.status(404).json({ status: "error", message: "Tienda no encontrada" });
+
+            req.logger.warning(`Tienda no encontrada id: ${req.params.id}`);
+
+            return res.status(404).json({ 
+                status: "error", 
+                message: "Tienda no encontrada" 
+            });
         }
+
+        req.logger.info(`Tienda actualizada correctamente: ${store.name}`);
 
         return apiResponse(res, {
             statusCode: 200,
@@ -135,16 +187,31 @@ export const updateStore = async (req, res, next) => {  // Actualiza una tienda.
         });
 
     } catch (err) {
+
+        req.logger.error(`Error al actualizar tienda: ${err.message}`);
+
         next(err);
     }
 };
 
 export const deleteStore = async (req, res, next) => {
     try {
+
+        req.logger.info(`Eliminando tienda id: ${req.params.id}`);
+
         const deleted = await storeService.deleteStore(req.params.id);
+
         if (!deleted) {
-            return res.status(404).json({ status: "error", message: "Tienda no encontrada" });
+
+            req.logger.warning(`Tienda no encontrada id: ${req.params.id}`);
+
+            return res.status(404).json({ 
+                status: "error", 
+                message: "Tienda no encontrada" 
+            });
         }
+
+        req.logger.info(`Tienda eliminada correctamente id: ${req.params.id}`);
 
         return apiResponse(res, {
             statusCode: 200,
@@ -154,6 +221,9 @@ export const deleteStore = async (req, res, next) => {
 
 
     } catch (err) {
+
+        req.logger.error(`Error al eliminar tienda: ${err.message}`);
+
         next(err);
     }
 };

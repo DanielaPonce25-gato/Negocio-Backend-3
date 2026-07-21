@@ -9,7 +9,7 @@
     background-color: yellow;
     display: flexbox; 
     height: 50px;
-    width: auto;
+    width: 100%;
 }
 
 
@@ -104,7 +104,28 @@ summary{
 }
 
 .fondo{
+    flex-direction: column;
     background-color: #e3dfdfd3;
+
+}
+
+.category-list{   
+    display: flex;
+    flex-direction: column;
+    font-weight: 200;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.itemnarvar:hover,
+.itemnarvar_active{
+
+    background: none;
+    font-weight: bold;
+    font-size: 20px;
+    color: #0246f2;
 
 }
 
@@ -112,27 +133,10 @@ summary{
     padding-top: 2px;
 }
 
-.itemnarvar{
-    font-size: 18px;
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    
-
-}
-
-.itemnarvar:hover,
-.itemnarvar_active {
-    background-color: #08cffb;
-    color: rgb(12, 0, 0);
-}
-
-
-
-@media (min-width:200px) and (max-width:500px){  
+@media (min-width:230px) and (max-width:500px){  
 
     .header {
-        height: 50px;   /*tamaño del nevegador*/
+        height: 50px;   
     }
     
     .nav-menu {
@@ -161,7 +165,7 @@ summary{
         background: none;
         font-weight: bold;
         font-size: 20px;
-        color: #3cd300;
+        color: rgb(7, 37, 169);
     }
     
 
@@ -192,165 +196,400 @@ summary{
         height: 30px;
         width: 30px;
     }
+
+
 }
-    
+
 
 
 /*mobay (500) nav hecho*/
 
 
 @media (min-width: 501px) and (max-width: 800px) {
-    .logo {
-        font-size: 20px;
-        padding-left: 3px;
-    }
-
-    .logoavion{
-
-        margin-top: 3px;
-        height: 30px;
-        width: 30px;
-    }
-
-
-    .nav-menu-item {
-        font-size: 15px;
-        margin: 0 3px;
-    }
-
-    .nav-menu-link {
-        padding: 2px;
-    }
-
-    summary{
-        color: azure;
-    }
     
-    .fondodesplegable{
-        width: 60px;
-    }
-    
-    .itemnarvar{
-    
-        font-size: 14px;
-    }
+
+.header {
+    height: 60px;
+    width: 100%;
 }
 
-/*
 
-@media (min-width: 801px) and (max-width:1000px){      
-      
+.nav {
+    margin: 0px 1px;
+}
+
+
 .logo {
-    font-size: 27px;
-    padding-left: 20px;
-    line-height: 50px;
-
+    font-size: 20px;
+    margin-bottom: 97%;
+    margin-right: 10px;
 }
 
-.logoavion{
 
+
+.logocarrito{
     margin-top: 3px;
-    height: 35px;
-    width: 35px;
-   
+    height: 50px;
+    width: 50px;
 }
+
 
 .nav-menu-item {
-    font-size: 18px;
-    margin: 0 8px;
+    font-size: 20px;
+    margin: 0 3px;
 }
+
 
 .nav-menu-link {
-    padding: 15px;
+    padding: 10px;
 }
 
-.itemnarvar{
+.nav-menu-link:hover,
+.nav-menu-link_active {
+    background: none;
+    font-weight: bold;
+    font-size: 20px;
+    color: rgb(7, 37, 169);
+}
+
+
+.fondo{
+    flex-direction: column;
+    background-color: rgb(255, 255, 168);
+    font-size: 19px;
+
+}
+
+.category-list{   
+    font-weight: 300;
+}
+
+.fondo a{
+    padding-top: 5px;
+}
+
+.chango{
+    margin-top: 8px;
+    height: 40px;
+    width: 40px;
+    background-color: yellow;
+    border: none;
+    cursor: pointer;
+}
+
+.carrito{
+    height: 30px;
+    width: 30px;
+}
+
+
+}
+
+
+
+@media (min-width: 801px) and (max-width:1000px){      
+
+
+.header {
+    height: 60px;
     
-    font-size: 16px;
+    width: 100%;
+}
 
+
+.nav {
+    margin: 0px 10px;
+}
+
+
+.logo {
+    font-size: 25px;
+    margin-bottom: 99%;
+    margin-right: 10px;
+}
+
+
+.logocarrito{
+    margin-top: 5px;
+    height: 50px;
+    width: 60px;
+}
+
+
+.nav-menu-item {
+    font-size: 21px;
+    margin: 0 5px;
+}
+
+
+.nav-menu-link {
+    padding: 5px;
+}
+
+.nav-menu-link:hover,
+.nav-menu-link_active {
+    background: none;
+    font-weight: bold;
+    font-size: 22px;
+    color: rgb(7, 37, 169);
+}
+
+
+.fondo{
+    flex-direction: column;
+    background-color: rgb(255, 255, 168);
+    font-size: 20px;
+    padding-left: 8px;
+
+}
+
+.itemnarvar:hover,
+.itemnarvar_active {
+    background: none;
+    font-weight: bold;
+    font-size: 21px;
+    color: rgb(7, 37, 169);
+}
+
+
+.chango{
+    margin-top: 6px;
+    height: 44px;
+    width: 44px;
+    background-color: yellow;
+    border: none;
+    cursor: pointer;
+}
+
+.carrito{
+    height: 34px;
+    width: 34px;
 }
 
 }
 
-@media (min-width: 1001px) and (max-width:1200px){  /* escritorio hecho*
+
+@media (min-width: 1001px) and (max-width:1200px){  
+
+.header {
+    height: 70px;
+}
 
 
-    .logo {
-        font-size: 32px;
-        padding-left: 25px;
+.nav {
+    margin: 0px 20px;
+}
+
+
+.logo {
+    font-size: 33px;
+    margin-bottom: 130%;
+    padding-right: 8px;
+}
+
+
+.logocarrito{
+    margin-top: 5px;
+    height: 60px;
+    width: 65px;
+}
+
+
+.nav-menu-item {
+    line-height: 70px;
+    font-size: 23px;
+    margin: 0 7px;
+}
+
+
+.nav-menu-link {
+    padding: 5px;
+}
+
+.nav-menu-link:hover,
+.nav-menu-link_active {
+    background: none;
+    font-weight: bold;
+    font-size: 25px;
+    color: rgb(7, 37, 169);
+}
+
+
+.fondo{
+    background-color: rgb(255, 255, 168);
+    font-size: 22px;
+    padding-left: 10px;
+
+}
+
+.itemnarvar:hover,
+.itemnarvar_active {
+    background: none;
+    font-weight: bold;
+    font-size: 24px;
+    color: rgb(7, 37, 169);
+}
+
+.chango{
+    margin-top: 10px;
+    height: 47px;
+    width: 47px;
+    background-color: yellow;
+    border: none;
+    cursor: pointer;
+}
+
+.carrito{
+    height: 40px;
+    width: 37px;
+}
+
+    /* escritorio nav hecho*/
+}
+
+
+@media (min-width: 1201px) and (max-width:1400px){   /* escrirorio monitor grande listo*/
+
+
+    
+.header {
+    height: 80px;
+}
+
+
+.nav {
+    margin: 0px 20px;
+}
+
+
+.logo {
+    font-size: 36px;
+    margin-bottom: 130%;
+    padding-right: 8px;
+}
+
+
+.logocarrito{
+    margin-top: 5px;
+    height: 70px;
+    width: 70px;
+}
+
+
+.nav-menu-item {
+    line-height: 80px;
+    font-size: 26px;
+    margin: 0 22px;
+}
+
+
+.nav-menu-link:hover,
+.nav-menu-link_active {
+    background: none;
+    font-weight: bold;
+    font-size: 30px;
+    color: rgb(7, 37, 169);
+}
+
+
+.fondo{
+    background-color: rgb(255, 255, 168);
+    font-size: 25px;
+    padding-left: 7px;
+
+}
+
+.itemnarvar:hover,
+.itemnarvar_active {
+    background: none;
+    font-weight: bold;
+    font-size: 27px;
+    color: rgb(7, 37, 169);
+}
+
+
+.chango{
+    margin-top: 12px;
+    height: 55px;
+    width: 55px;
+    background-color: yellow;
+    border: none;
+    cursor: pointer;
+}
+
+.carrito{
+    height: 40px;
+    width: 45px;
+}
+
+    /* escritorio nav hecho*/
+
+}
+
+
+/* Monitores grandes */
+@media (min-width: 1401px) {
+
+    .header {
+        height: 80px;
     }
 
-    .logoavion{
-        margin-top: 3px;
+    .nav {
+        margin: 0px 20px;
+    }
+
+    .logo {
+        font-size: 36px;
+        margin-bottom: 130%;
+        padding-right: 8px;
+    }
+
+    .logocarrito {
+        margin-top: 5px;
+        height: 70px;
+        width: 70px;
+    }
+
+    .nav-menu-item {
+        line-height: 80px;
+        font-size: 26px;
+        margin: 0 22px;
+    }
+
+    .nav-menu-link:hover,
+    .nav-menu-link_active {
+        background: none;
+        font-weight: bold;
+        font-size: 30px;
+        color: rgb(7, 37, 169);
+    }
+
+    .fondo {
+        background-color: rgb(255, 255, 168);
+        font-size: 25px;
+        padding-left: 7px;
+    }
+
+    .itemnarvar:hover,
+    .itemnarvar_active {
+        background: none;
+        font-weight: bold;
+        font-size: 27px;
+        color: rgb(7, 37, 169);
+    }
+
+
+    .chango {
+        margin-top: 12px;
+        height: 55px;
+        width: 55px;
+        background-color: yellow;
+        border: none;
+        cursor: pointer;
+    }
+
+    .carrito {
         height: 40px;
-        width: 40px;
-       
-    } 
-    
-    .nav-menu-item {
-        font-size: 22px;
-        margin: 0 16px;
-    }
-     
-    
-    .nav-menu-link {
-        padding: 12px;
-    }
-    
-    .header {
-        height: 57px;
-        width: 100%;
-    }
-    
-    .itemnarvar{
-    
-        font-size: 18px;
-    
-    }
-    
-    
-    /* escritorio nav hecho*
-}
-
-@media (min-width: 1201px) and (max-width:1400px){   /* escrirorio monitor grande listo*
-
-   
-    .logo {
-        font-size: 34px;
-        padding-left: 30px;
-    }
-
-    .logoavion{
-        margin-top: 0px;
-        height: 45px;
         width: 45px;
-       
-    } 
-    
-    .nav-menu-item {
-        font-size: 24px;
-        margin: 0 10px;
     }
-
-   
-    .nav-menu-link {
-        padding: 15px;
-    }
-    
-    .header {
-        height: 65px;
-        width: 100%;
-    
-    }
-
-    .itemnarvar{
-    
-        font-size: 22px;
-    
-    }
-
-
-    /* escritorio nav hecho*
-
 }
-

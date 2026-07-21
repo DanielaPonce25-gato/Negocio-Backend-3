@@ -3,3 +3,11 @@
 
 node_modules/
 
+logs/*.log
+
+views/producto.html
+
+css/producto.css
+
+tools/producto.js
+

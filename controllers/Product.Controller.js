@@ -1,6 +1,7 @@
 import * as ProductService from "../services/Product.Service.js";
 import { apiResponse } from "../utils/apiResponse.js";
 
+
 const parseImageUrls = (req) => {  // esta funcion contiene todas las imágenes enviadas en la petición 
     
     const images = [];  // Aquí se guardarán todas las imágenes.
@@ -64,8 +65,13 @@ const buildProductPayload = (req) => {
 
 export const createProduct = async (req, res, next) => {
     try {
+
+        req.logger.info("Intentando crear producto");
+
         const productData = buildProductPayload(req);  // utilizado del molde
         const product = await ProductService.createProduct(productData);
+
+        req.logger.info( `Producto creado correctamente: ${product.title}` );
 
         return apiResponse(res, {
             statusCode: 201,  // Código de estado HTTP para "Creado"
@@ -74,6 +80,9 @@ export const createProduct = async (req, res, next) => {
         });
 
     } catch (err) {
+
+        req.logger.error(`Error crear Producto: ${err.message}`);
+
         next(err); // Pasa el error al middleware de manejo de errores
     }
 };
@@ -83,7 +92,12 @@ export const createProduct = async (req, res, next) => {
 
 export const getProducts = async (req, res, next) => { 
     try {
+
+        req.logger.info("Obteniendo lista de productos");
+
         const products = await ProductService.getProducts();
+
+        req.logger.info( `Productos obtenidos: ${products.length}` );
 
         return apiResponse(res, {
             statusCode: 200,  // Código de estado HTTP para "OK"
@@ -92,6 +106,9 @@ export const getProducts = async (req, res, next) => {
         });
 
     } catch (err) {
+
+        req.logger.error(`Error al obtener los Producto: ${err.message}`);
+
         next(err); 
     }
 };
@@ -101,22 +118,48 @@ export const getProducts = async (req, res, next) => {
 
 export const getProductById = async (req, res, next) => {
     try {
+
+        req.logger.info( `Buscando producto id: ${req.params.id}`);
+
         const product = await ProductService.getProductById(req.params.id);
 
+
+        if (!product) {
+
+            req.logger.warning( `Producto no encontrado id: ${req.params.id}` );
+
+            return res.status(404).json({
+                status: "error",
+                message: "Producto no encontrado"
+            });
+        }
+
+
+        req.logger.info( `Producto encontrado: ${product.title}` );
+
+
         return apiResponse(res, {
-            statusCode: 200,  
-            message: "Producto obtenido exitosamente", 
+            statusCode: 200,
+            message: "Producto obtenido exitosamente",
             payload: product
         });
 
     } catch (err) {
+
+        req.logger.error(`Error al buscar un Producto: ${err.message}`);
+
         next(err);
     }
 };
 
 export const getCategories = async (req, res, next) => {
     try {
+
+        req.logger.info("Obteniendo categorías");
+
         const categories = await ProductService.getProductCategories();
+
+        req.logger.info( `Categorías obtenidas: ${categories.length}` );
 
         return apiResponse(res, {
             statusCode: 200,
@@ -125,6 +168,9 @@ export const getCategories = async (req, res, next) => {
         });
 
     } catch (err) {
+
+        req.logger.error(`Error al obtener las Categorias: ${err.message}`);
+
         next(err);
     }
 };
@@ -134,8 +180,13 @@ export const getCategories = async (req, res, next) => {
 
 export const updateProduct = async (req, res, next) => {
     try {
+
+        req.logger.info( `Actualizando producto id: ${req.params.id}` );
+
         const productData = buildProductPayload(req);
         const product = await ProductService.updateProduct(req.params.id, productData);
+
+        req.logger.info( `Producto actualizado correctamente: ${product.title}` );
 
         return apiResponse(res, {
             statusCode: 200,
@@ -144,6 +195,9 @@ export const updateProduct = async (req, res, next) => {
         });
     
     } catch (err) {
+
+        req.logger.error(`Error al actualizar el Producto: ${err.message}`);
+
         next(err); 
     }
 };
@@ -153,7 +207,12 @@ export const updateProduct = async (req, res, next) => {
 
 export const deleteProduct = async (req, res, next) => {
     try {
+
+        req.logger.warning( `Eliminando producto id: ${req.params.id}` );
+
         await ProductService.deleteProduct(req.params.id);
+
+        req.logger.info( `Producto eliminado correctamente id: ${req.params.id}` );
 
         return apiResponse(res, {
             statusCode: 200,
@@ -161,7 +220,11 @@ export const deleteProduct = async (req, res, next) => {
             payload: null
         });
 
+
     } catch (err) {
+
+        req.logger.error(`Error al eliminar el Producto: ${err.message}`);
+
         next(err);
     }
 };
