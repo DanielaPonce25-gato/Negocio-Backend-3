@@ -8,6 +8,7 @@ import { generateMockProducts } from "../repositories/ProductMockRepository.js";
 import { generateMockOrders } from "../repositories/OrderMockRepository.js";
 import { generateMockStores } from "../repositories/StoreMockRepository.js";
 
+import { createError } from "../utils/apiResponse.js";
 
 class MockDataService {
 
@@ -38,13 +39,17 @@ class MockDataService {
         return generateMockOrders(validatedQuantity, null, null, products);
     }
 
-    getMockStores(quantity) {
+    getMockStores(quantity, users = []) {
+
         const validatedQuantity = this.validateQuantity(quantity, 5);
 
-        const users = generateMockUsers(validatedQuantity);
+        if (users.length === 0) {
+            users = generateMockUsers(validatedQuantity);
+        }
 
         return generateMockStores(users);
     }
+
 
     getAllMockData(quantity) {
 
@@ -52,8 +57,23 @@ class MockDataService {
 
         const users = this.getMockUsers(validatedQuantity);
 
-        return {
+        const products = this.getMockProducts(validatedQuantity);
+
+        const stores = this.getMockStores(
+            validatedQuantity,
             users
+        );
+
+        const orders = this.getMockOrders(
+            validatedQuantity,
+            products
+        );
+
+        return {
+            users,
+            products,
+            stores,
+            orders
         };
     }
 
@@ -64,47 +84,57 @@ class MockDataService {
 
         const validatedQuantity = this.validateQuantity(quantity, 5);
 
-        // Usuarios
-        const users = generateMockUsers(validatedQuantity);
-        const savedUsers = await User.insertMany(users);
+        try {
 
-        // Productos
-        const products = [];
+            // Usuarios
+            const users = generateMockUsers(validatedQuantity);
+            const savedUsers = await User.insertMany(users);
 
-        for (const user of savedUsers) {
-            products.push(generateMockProducts(1, user._id)[0]);
+            // Productos
+            const products = [];
+
+            for (const user of savedUsers) {
+                products.push(generateMockProducts(1, user._id)[0]);
+            }
+
+            const savedProducts = await Product.insertMany(products);
+
+            // Tiendas
+            const stores = generateMockStores(savedUsers);
+            const savedStores = await Store.insertMany(stores);
+
+            // Órdenes
+            const orders = [];
+
+            for (let i = 0; i < validatedQuantity; i++) {
+
+                const order = generateMockOrders(
+                    1,
+                    savedUsers[i]._id,
+                    savedStores[i]._id,
+                    [savedProducts[i]]
+                )[0];
+
+                orders.push(order);
+            }
+
+            const savedOrders = await Order.insertMany(orders);
+
+            return {
+                users: savedUsers.length,
+                products: savedProducts.length,
+                stores: savedStores.length,
+                orders: savedOrders.length
+            };
+
+        } catch {
+
+            throw createError(
+                "DATABASE_ERROR"
+            );
+
         }
 
-        const savedProducts = await Product.insertMany(products);
-
-        // Tiendas
-        const stores = generateMockStores(savedUsers);
-
-        const savedStores = await Store.insertMany(stores);
-
-        // Órdenes
-        const orders = [];
-
-        for (let i = 0; i < validatedQuantity; i++) {
-
-            const order = generateMockOrders(
-                1,
-                savedUsers[i]._id,
-                savedStores[i]._id,
-                [savedProducts[i]]
-            )[0];
-
-            orders.push(order);
-        }
-
-        const savedOrders = await Order.insertMany(orders);
-
-        return {
-            users: savedUsers.length,
-            products: savedProducts.length,
-            stores: savedStores.length,
-            orders: savedOrders.length
-        };
     }
 }
 
