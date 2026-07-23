@@ -112,55 +112,55 @@ http://localhost:8000
 
 ## Usuarios
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /api/users |
-| GET | /api/users/:id |
-| POST | /api/users |
-| PUT | /api/users/:id |
-| DELETE | /api/users/:id |
+| Método | Endpoint |  Descripción |
+|---------|----------|--------------------------------------------------------------------------------|
+| GET | /api/users |  Obtiene la lista de todos los usuarios registrados (sin incluir la contraseña). 
+| GET | /api/users/:id |  Obtiene la información de un usuario específico a partir de su ID.
+| POST | /api/users |  Crea un nuevo usuario con los datos enviados en la solicitud.
+| PUT | /api/users/:id |  Actualiza la información de un usuario existente identificado por su ID.
+| DELETE | /api/users/:id |  Elimina un usuario de la base de datos según su ID.
 
 ---
 
 ## Productos
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /api/products |
-| GET | /api/products/categories |
-| GET | /api/products/:id |
-| POST | /api/products |
-| PUT | /api/products/:id |
-| DELETE | /api/products/:id |
+| Método | Endpoint |  Descripción |
+|---------|----------|----------------------------------------------------------------------------------------------------|
+| GET | /api/products | Obtiene la lista de todos los productos registrados junto con la información de su vendedor.
+| GET | /api/products/categories | Obtiene la lista de todas las categorías de productos disponibles, sin repetir valores.
+| GET | /api/products/:id |  Obtiene la información de un producto específico a partir de su ID.
+| POST | /api/products |  Crea un nuevo producto con los datos enviados en la solicitud.
+| PUT | /api/products/:id |  Actualiza la información de un producto existente identificado por su ID. 
+| DELETE | /api/products/:id |  Elimina un producto de la base de datos según su ID.
 
 ---
 
 ## Tiendas
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /api/stores |
-| GET | /api/stores/:id |
-| GET | /api/stores/owner/:ownerId |
-| POST | /api/stores |
-| PUT | /api/stores/:id |
-| DELETE | /api/stores/:id |
+| Método | Endpoint |  Descripción |
+|---------|----------|----------------------------------------------------------------------------------------------------|
+| GET | /api/stores |  Obtiene la lista de todas las tiendas activas junto con la información de su propietario.
+| GET | /api/stores/:id |  Obtiene la información de una tienda específica a partir de su ID.
+| GET | /api/stores/owner/:ownerId |   Obtiene todas las tiendas asociadas a un propietario determinado mediante su ID.
+| POST | /api/stores |   Crea una nueva tienda con los datos enviados en la solicitud.
+| PUT | /api/stores/:id |   Actualiza la información de una tienda existente identificada por su ID.
+| DELETE | /api/stores/:id |   	Elimina una tienda de la base de datos según su ID.
 
 ---
 
 ## Órdenes
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /api/orders |
-| GET | /api/orders/:id |
-| GET | /api/orders/buyer/:buyerId |
-| GET | /api/orders/store/:storeId |
-| POST | /api/orders |
-| PATCH | /api/orders/:id/status |
-| PATCH | /api/orders/:id/priority |
-| PATCH | /api/orders/:id/proof |
-| DELETE | /api/orders/:id |
+| Método | Endpoint |  Descripción |
+|---------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| GET | /api/orders |    Obtiene la lista de todas las órdenes registradas, ordenadas de la más reciente a la más antigua.
+| GET | /api/orders/:id |  Obtiene la información de una orden específica a partir de su ID, incluyendo los datos del comprador, la tienda y los productos asociados.
+| GET | /api/orders/buyer/:buyerId |    Obtiene todas las órdenes realizadas por un comprador específico.
+| GET | /api/orders/store/:storeId |    Obtiene todas las órdenes asociadas a una tienda específica.
+| POST | /api/orders |  Crea una nueva orden con los datos enviados en la solicitud. 
+| PATCH | /api/orders/:id/status |   Actualiza el estado de una orden existente.
+| PATCH | /api/orders/:id/priority |    Actualiza la prioridad de una orden existente.
+| PATCH | /api/orders/:id/proof |    Actualiza el comprobante de pago asociado a una orden.
+| DELETE | /api/orders/:id |    Elimina una orden de la base de datos según su ID.
 
 ---
 
@@ -168,14 +168,14 @@ http://localhost:8000
 
 Disponible únicamente en desarrollo.
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /api/mocks/mockingusers |
-| GET | /api/mocks/mockingproducts |
-| GET | /api/mocks/mockingorders |
-| GET | /api/mocks/mockingstores |
-| GET | /api/mocks/mockingall |
-| POST | /api/mocks/generateData |
+| Método | Endpoint |  Descripción |
+|---------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| GET | /api/mocks/mockingusers |    Genera y devuelve usuarios ficticios sin almacenarlos en la base de datos.
+| GET | /api/mocks/mockingproducts |    Genera y devuelve productos ficticios sin almacenarlos en la base de datos.
+| GET | /api/mocks/mockingorders |    Genera y devuelve órdenes ficticias sin almacenarlas en la base de datos.
+| GET | /api/mocks/mockingstores |    Genera y devuelve tiendas ficticias sin almacenarlas en la base de datos.
+| GET | /api/mocks/mockingall |    Genera y devuelve un conjunto completo de datos ficticios (usuarios, productos, órdenes y tiendas).
+| POST | /api/mocks/generateData |    Genera datos ficticios y los guarda en la base de datos para realizar pruebas de la aplicación.
 
 ---
 
@@ -295,6 +295,10 @@ Definición de los endpoints.
 ### utils
 
 Funciones auxiliares, respuestas de la API, Factory de errores y diccionario de errores.
+
+### tools 
+
+Scripts JavaScript del frontend para la interacción con las vistas y el consumo de la API.
 
 ### uploads
 
