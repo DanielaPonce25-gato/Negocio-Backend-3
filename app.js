@@ -11,6 +11,8 @@ import storeRoutes from "./routes/store.routes.js";
 import mockRoutes from "./routes/mock.routes.js";
 import vistaRoutes from "./routes/views.routes.js";
 
+import docsRouter from "./routes/docs.router.js";
+
 import errorHandler from "./middleware/MiddlewareGlobal.js";
 import { notFoundHandler } from "./middleware/INVALID_ROUTE.js";
 
@@ -44,6 +46,9 @@ app.use("/api/stores", storeRoutes);
 
 
 app.use("/", vistaRoutes);
+
+
+app.use("/api/docs", docsRouter);
 
 if (envConfig.nodeEnv === "development") {
     app.use("/api/mocks", mockRoutes);

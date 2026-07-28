@@ -47,19 +47,41 @@ const parseImageUrls = (req) => {  // esta funcion contiene todas las imágenes 
 // armar un objeto producto, molde
 
 const buildProductPayload = (req) => {
-    const { title, description, price, stock, category, seller } = req.body;
-    const payload = { title, description, price, stock, category, seller };
+    const payload = {};
+
+    if (req.body.title) {
+        payload.title = req.body.title;
+    }
+
+    if (req.body.description) {
+        payload.description = req.body.description;
+    }
+
+    if (req.body.price !== undefined && req.body.price !== "") {
+        payload.price = Number(req.body.price);
+    }
+
+    if (req.body.stock !== undefined && req.body.stock !== "") {
+        payload.stock = Number(req.body.stock);
+    }
+
+    if (req.body.category) {
+        payload.category = req.body.category;
+    }
+
+    if (req.body.seller) {
+        payload.seller = req.body.seller;
+    }
 
     const imageUrls = parseImageUrls(req);
+
     if (imageUrls.length) {
         payload.images = imageUrls;
     }
 
     return payload;
+
 };
-
-
-
 
 // creacion del producto
 

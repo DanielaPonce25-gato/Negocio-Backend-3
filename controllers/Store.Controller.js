@@ -45,10 +45,38 @@ const parseImageUrls = (req) => {
 };
 
 export const buildStorePayload = (req) => {
-    const { owner, name, description, address, phone, email, isActive } = req.body;
-    const payload = { owner, name, description, address, phone, email, isActive };
+    const payload = {};
+
+    if (req.body.owner) {
+        payload.owner = req.body.owner;
+    }
+
+    if (req.body.name) {
+        payload.name = req.body.name;
+    }
+
+    if (req.body.description) {
+        payload.description = req.body.description;
+    }
+
+    if (req.body.address) {
+        payload.address = req.body.address;
+    }
+
+    if (req.body.phone) {
+        payload.phone = req.body.phone;
+    }
+
+    if (req.body.email) {
+        payload.email = req.body.email;
+    }
+
+    if (req.body.isActive !== undefined && req.body.isActive !== "") {
+        payload.isActive = req.body.isActive === "true";
+    }
 
     const imageUrls = parseImageUrls(req);
+
     if (imageUrls.length) {
         payload.images = imageUrls;
     }
