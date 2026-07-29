@@ -12,25 +12,40 @@ import { createError } from "../utils/apiResponse.js";
 
 class MockDataService {
 
-    validateQuantity(value, fallback = 3) {
+    validateQuantity(value) {
+
         const parsed = Number(value);
-        return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+
+        if (!Number.isFinite(parsed) || parsed <= 0) {
+
+            throw createError(
+                "VALIDATION_ERROR",
+                "La cantidad debe ser un número mayor que cero."
+            );
+
+        }
+
+        return parsed;
+
     }
 
     // SOLO GENERAN DATOS
 
     getMockUsers(quantity) {
-        const validatedQuantity = this.validateQuantity(quantity, 5);
+
+        const validatedQuantity = this.validateQuantity(quantity ?? 5);
         return generateMockUsers(validatedQuantity);
     }
 
     getMockProducts(quantity) {
-        const validatedQuantity = this.validateQuantity(quantity, 5);
+
+        const validatedQuantity = this.validateQuantity(quantity ?? 5);
         return generateMockProducts(validatedQuantity);
     }
 
     getMockOrders(quantity, products = []) {
-        const validatedQuantity = this.validateQuantity(quantity, 5);
+
+        const validatedQuantity = this.validateQuantity(quantity ?? 5);
 
         if (products.length === 0) {
             products = this.getMockProducts(validatedQuantity);
@@ -41,7 +56,7 @@ class MockDataService {
 
     getMockStores(quantity, users = []) {
 
-        const validatedQuantity = this.validateQuantity(quantity, 5);
+        const validatedQuantity = this.validateQuantity(quantity ?? 5);
 
         if (users.length === 0) {
             users = generateMockUsers(validatedQuantity);
@@ -53,7 +68,7 @@ class MockDataService {
 
     getAllMockData(quantity) {
 
-        const validatedQuantity = this.validateQuantity(quantity, 5);
+        const validatedQuantity = this.validateQuantity(quantity ?? 5);
 
         const users = this.getMockUsers(validatedQuantity);
 
@@ -82,7 +97,7 @@ class MockDataService {
 
     async generateData(quantity) {
 
-        const validatedQuantity = this.validateQuantity(quantity, 5);
+        const validatedQuantity = this.validateQuantity(quantity ?? 5);
 
         try {
 

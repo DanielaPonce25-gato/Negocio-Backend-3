@@ -27,6 +27,12 @@ const customLevels = {
 
 winston.addColors(customLevels.colors);
 
+const logFormat = winston.format.printf(
+    ({ timestamp, level, message }) => {
+        return `${timestamp} [${level}]: ${message}`;
+    }
+);
+
 const logger = winston.createLogger({
     levels: customLevels.levels,
 
@@ -40,7 +46,8 @@ const logger = winston.createLogger({
 
             format: winston.format.combine(
                 winston.format.colorize(),
-                winston.format.simple()
+                winston.format.timestamp(),
+                logFormat
             )
         }),
 
@@ -51,7 +58,7 @@ const logger = winston.createLogger({
 
             format: winston.format.combine(
                 winston.format.timestamp(),
-                winston.format.simple()
+                logFormat
             )
         })
     ]
