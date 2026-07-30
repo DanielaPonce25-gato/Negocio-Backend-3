@@ -33,49 +33,19 @@ const upload = multer({
  *   post:
  *     summary: Crear un nuevo producto
  *     tags:
- *       - Productos
+ *       - Products
  *     requestBody:
  *       required: true
  *       content:
  *         multipart/form-data:
  *           schema:
- *             type: object
- *             required:
- *               - title
- *               - description
- *               - price
- *               - stock
- *               - category
- *               - seller
- *             properties:
- *               title:
- *                 type: string
- *                 example: Notebook Lenovo
- *               description:
- *                 type: string
- *                 example: Notebook Lenovo IdeaPad 15 pulgadas
- *               price:
- *                 type: number
- *                 example: 950000
- *               stock:
- *                 type: number
- *                 example: 10
- *               category:
- *                 type: string
- *                 example: Tecnología
- *               seller:
- *                 type: string
- *                 description: ID del usuario vendedor
- *                 example: 66b5b0a5d3c9d7f5b8d2e456
- *               images:
- *                 type: array
- *                 description: Imágenes del producto
- *                 items:
- *                   type: string
- *                   format: binary
+ *             $ref: '#/components/schemas/ProductCreate'
+ *           encoding:
+ *             images:
+ *              contentType: image/jpeg, image/png, image/webp, image/gif
  *     responses:
  *       201:
- *         description: Producto creado exitosamente
+ *         description: Producto creado exitosamente.
  *         content:
  *           application/json:
  *             schema:
@@ -86,14 +56,22 @@ const upload = multer({
  *                   example: success
  *                 message:
  *                   type: string
- *                   example: Producto creado correctamente
+ *                   example: Producto creado exitosamente
  *                 payload:
  *                   $ref: '#/components/schemas/Product'
  *       400:
- *         description: Datos inválidos
+ *         description: Datos de entrada inválidos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       500:
- *         description: Error interno del servidor
- */
+ *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+*/
 
 // Ruta para crear un nuevo producto
 router.post("/", upload.array("images", 5), productController.createProduct);
@@ -105,18 +83,31 @@ router.post("/", upload.array("images", 5), productController.createProduct);
  *   get:
  *     summary: Obtener todos los productos
  *     tags:
- *       - Productos
+ *       - Products
  *     responses:
  *       200:
  *         description: Productos obtenidos exitosamente
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Product'
- *       404:
- *         description: Error al obtener el recurso
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Productos obtenidos exitosamente
+ *                 payload:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Product'
+ *       500:
+ *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 // Ruta para obtener todos los productos
@@ -129,7 +120,7 @@ router.get("/", productController.getProducts);
  *   get:
  *     summary: Obtener todas las categorías de productos
  *     tags:
- *       - Productos
+ *       - Products
  *     responses:
  *       200:
  *         description: Categorías obtenidas exitosamente
@@ -153,8 +144,12 @@ router.get("/", productController.getProducts);
  *                     - Hogar
  *                     - Deportes
  *                     - Belleza
- *       404:
- *         description: Error al obtener el recurso
+ *       500:
+ *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 // Ruta para obtener las categorías de productos
@@ -167,7 +162,7 @@ router.get("/categories", productController.getCategories);
  *   get:
  *     summary: Obtener un producto por su ID
  *     tags:
- *       - Productos
+ *       - Products
  *     parameters:
  *       - in: path
  *         name: id
@@ -194,8 +189,22 @@ router.get("/categories", productController.getCategories);
  *                   $ref: '#/components/schemas/Product'
  *       404:
  *         description: Producto no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       400:
+ *         description: Datos de entrada inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       500:
  *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 // Ruta para obtener un producto por su ID
@@ -208,7 +217,7 @@ router.get("/:id", productController.getProductById);
  *   put:
  *     summary: Actualizar un producto por su ID
  *     tags:
- *       - Productos
+ *       - Products
  *     parameters:
  *       - in: path
  *         name: id
@@ -222,44 +231,44 @@ router.get("/:id", productController.getProductById);
  *       content:
  *         multipart/form-data:
  *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *                 example: Notebook Lenovo
- *               description:
- *                 type: string
- *                 example: Notebook Lenovo IdeaPad actualizada
- *               price:
- *                 type: number
- *                 example: 10
- *               stock:
- *                 type: integer
- *                 example: 15
- *               category:
- *                 type: string
- *                 example: Tecnología
- *               seller:
- *                 type: string
- *                 example: 6a640f1fbcd850ff340b21f2
- *               images:
- *                 type: array
- *                 items:
- *                   type: string
- *                   format: binary
+ *             $ref: '#/components/schemas/ProductUpdate'
+ *           encoding:
+ *             images:
+ *              contentType: image/jpeg, image/png, image/webp, image/gif
  *     responses:
  *       200:
  *         description: Producto actualizado correctamente
  *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Product'
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  status:
+ *                    type: string
+ *                    example: success
+ *                  message:
+ *                    type: string
+ *                    example: Producto actualizado correctamente
+ *                  payload:
+ *                    $ref: '#/components/schemas/Product'
  *       400:
  *         description: Datos inválidos
+ *         content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ErrorResponse'
  *       404:
  *         description: Producto no encontrado
+ *         content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ErrorResponse'
  *       500:
  *         description: Error interno del servidor
+ *         content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/ErrorResponse'
  */
 
 // Ruta para actualizar un producto por su ID
@@ -272,7 +281,7 @@ router.put("/:id", upload.array("images", 5), productController.updateProduct);
  *   delete:
  *     summary: Eliminar un producto por su ID
  *     tags:
- *       - Productos
+ *       - Products
  *     parameters:
  *       - in: path
  *         name: id
@@ -295,10 +304,27 @@ router.put("/:id", upload.array("images", 5), productController.updateProduct);
  *                 message:
  *                   type: string
  *                   example: Producto eliminado correctamente
+ *                 payload:
+ *                   nullable: true
+ *                   example: null
  *       400:
  *         description: Error al eliminar el recurso
+ *         content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Producto no encontrado
+ *         content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ErrorResponse'
  *       500:
  *         description: Error interno del servidor
+ *         content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ErrorResponse'
 */
 
 // Ruta para eliminar un producto por su ID

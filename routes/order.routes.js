@@ -26,20 +26,41 @@ const router = Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Order'
+ *             $ref: '#/components/schemas/OrderCreate'
  *     responses:
  *       201:
  *         description: Orden creada exitosamente.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Order'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Orden creada exitosamente.
+ *                 payload:
+ *                   $ref: '#/components/schemas/Order'
  *       400:
  *         description: Error al crear el recurso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       404:
  *         description: Error al obtener los recursos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 router.post("/", createOrder);
@@ -72,6 +93,10 @@ router.post("/", createOrder);
  *                     $ref: '#/components/schemas/Order'
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 router.get("/", getOrders);
@@ -111,8 +136,16 @@ router.get("/", getOrders);
  *                     $ref: '#/components/schemas/Order'
  *       404:
  *         description: Orden no encontrada.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 router.get("/buyer/:buyerId", getOrdersByBuyer);
@@ -152,8 +185,16 @@ router.get("/buyer/:buyerId", getOrdersByBuyer);
  *                     $ref: '#/components/schemas/Order'
  *       404:
  *         description: Error al obtener los recursos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 router.get("/store/:storeId", getOrdersByStore);
@@ -191,8 +232,16 @@ router.get("/store/:storeId", getOrdersByStore);
  *                   $ref: '#/components/schemas/Order'
  *       404:
  *         description: Orden no encontrada.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
 */
 
 router.get("/:id", getOrderById);
@@ -218,6 +267,8 @@ router.get("/:id", getOrderById);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - status
  *             properties:
  *               status:
  *                 type: string
@@ -247,10 +298,22 @@ router.get("/:id", getOrderById);
  *                   $ref: '#/components/schemas/Order'
  *       400:
  *         description: Datos de entrada inválidos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'  
  *       404:
  *         description: Orden no encontrada.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
 */
 
 router.patch("/:id/status", updateOrderStatus);
@@ -276,6 +339,8 @@ router.patch("/:id/status", updateOrderStatus);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - priority
  *             properties:
  *               priority:
  *                 type: string
@@ -302,10 +367,22 @@ router.patch("/:id/status", updateOrderStatus);
  *                   $ref: '#/components/schemas/Order'
  *       400:
  *         description: Datos de entrada inválidos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'  
  *       404:
  *         description: Orden no encontrada.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
 */
 
 router.patch("/:id/priority", updateOrderPriority);
@@ -331,6 +408,8 @@ router.patch("/:id/priority", updateOrderPriority);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - proof
  *             properties:
  *               proof:
  *                 type: object
@@ -356,10 +435,22 @@ router.patch("/:id/priority", updateOrderPriority);
  *                   $ref: '#/components/schemas/Order'
  *       400:
  *         description: Datos de entrada inválidos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
  *       404:
  *         description: Orden no encontrada.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
 */
 
 router.patch("/:id/proof", updateOrderProof);
@@ -397,8 +488,16 @@ router.patch("/:id/proof", updateOrderProof);
  *                   $ref: '#/components/schemas/Order'
  *       404:
  *         description: Orden no encontrada.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse' 
 */
 
 router.delete("/:id", deleteOrder);

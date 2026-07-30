@@ -30,57 +30,44 @@ const upload = multer({
  *   post:
  *     summary: Crear un usuario
  *     tags:
- *       - Usuarios
+ *       - Users
  *     requestBody:
  *       required: true
  *       content:
  *         multipart/form-data:
  *           schema:
- *             type: object
- *             required:
- *               - firstName
- *               - lastName
- *               - email
- *               - password
- *             properties:
- *               firstName:
- *                 type: string
- *                 example: Daniela
- *               lastName:
- *                 type: string
- *                 example: Ponce
- *               email:
- *                 type: string
- *                 format: email
- *                 example: daniela@gmail.com
- *               password:
- *                 type: string
- *                 format: password
- *                 example: 123456
- *               role:
- *                 type: string
- *                 enum: [customer, admin, driver, store]
- *                 example: customer
- *               addresses:
- *                 type: string
- *                 description: JSON con las direcciones.
- *                 example: '[{"label":"home","address":"Av. Siempre Viva 123","reference":"Casa azul"}]'
- *               documents:
- *                 type: string
- *                 description: JSON con los documentos.
- *                 example: '[{"user_document", "driver_license", "delivery_proof"}]'
- *               images:
- *                 type: array
- *                 items:
- *                   type: string
- *                   format: binary
+ *             $ref: '#/components/schemas/UserCreate'
+ *           encoding:
+ *             images:
+ *              contentType: image/jpeg, image/png, image/webp, image/gif
  *     responses:
  *       201:
- *         description: Usuario creado exitosamente
+ *         description: Usuario creado exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                   status:
+ *                     type: string
+ *                     example: success
+ *                   message:
+ *                     type: string
+ *                     example: Usuario creado exitosamente
+ *                   payload:
+ *                     $ref: '#/components/schemas/User'
  *       400:
- *         description: Error al crear el recurso
+ *         description: Error al crear el recurso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       409:
- *         description: Ya existe un usuario con ese correo electrónico
+ *         description: Ya existe un usuario con ese correo electrónico.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 // Crear usuario 
@@ -92,18 +79,31 @@ router.post("/", upload.array("images", 5) ,userController.createUser);
  *   get:
  *     summary: Obtener todos los usuarios
  *     tags:
- *       - Usuarios
+ *       - Users
  *     responses:
  *       200:
  *         description: Usuarios obtenidos exitosamente.
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- *       404:
- *         description: Error al obtener los recursos.
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Usuarios obtenidos exitosamente
+ *                 payload:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 // Obtener todos los usuarios
@@ -116,7 +116,7 @@ router.get("/", userController.getUsers);
  *   get:
  *     summary: Obtener un usuario por ID
  *     tags:
- *       - Usuarios
+ *       - Users
  *     parameters:
  *       - in: path
  *         name: id
@@ -131,9 +131,28 @@ router.get("/", userController.getUsers);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Usuario obtenido exitosamente
+ *                 payload:
+ *                   $ref: '#/components/schemas/User'
+ *       400:
+ *          description: Datos de entrada inválidos.
+ *          content:
+ *               application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/ErrorResponse'
  *       404:
  *         description: Error al obtener el recurso.
+ *         content:
+ *              application/json:
+ *                schema:
+ *                   $ref: '#/components/schemas/ErrorResponse'
 */
 
 // Obtener usuario por ID
@@ -146,7 +165,7 @@ router.get("/:id", userController.getUserById);
  *   put:
  *     summary: Actualizar un usuario por ID
  *     tags:
- *       - Usuarios
+ *       - Users
  *     parameters:
  *       - in: path
  *         name: id
@@ -158,65 +177,46 @@ router.get("/:id", userController.getUserById);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             type: object
- *             properties:
- *               firstName:
- *                 type: string
- *                 example: Daniela
- *               lastName:
- *                 type: string
- *                 example: Ponce
- *               email:
- *                 type: string
- *                 example: daniela@gmail.com
- *               password:
- *                 type: string
- *                 example: 123456
- *               role:
- *                 type: string
- *                 enum:
- *                   - customer
- *                   - admin
- *                   - driver
- *                   - store
- *                 example: customer
- *               addresses:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     label:
- *                       type: string
- *                       example: home
- *                     address:
- *                       type: string
- *                       example: Av. Siempre Viva 123
- *                     reference:
- *                       type: string
- *                       example: Casa azul
- *               documents:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example:
- *                   - user_document
- *                   - driver_license
- *               images:
- *                 type: array
- *                 items:
- *                   type: string
- *                   example: "http://localhost:8000/uploads/foto.jpg"
+ *             $ref: '#/components/schemas/UserUpdate'
+ *           encoding:
+ *             images:
+ *              contentType: image/jpeg, image/png, image/webp, image/gif
  *     responses:
  *       200:
  *         description: Usuario actualizado exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                status:
+ *                    type: string
+ *                    example: success
+ *                message:
+ *                   type: string
+ *                   example: Usuario actualizado exitosamente
+ *                payload:
+ *                   $ref: '#/components/schemas/User'
  *       400:
  *         description: Error al actualizar el recurso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       404:
  *         description: Usuario no encontrado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       500:
  *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 // Actualizar usuario por ID
@@ -229,7 +229,7 @@ router.put("/:id", upload.array("images", 5),userController.updateUser);
  *   delete:
  *     summary: Eliminar un usuario por ID
  *     tags:
- *       - Usuarios
+ *       - Users
  *     parameters:
  *       - in: path
  *         name: id
@@ -241,10 +241,38 @@ router.put("/:id", upload.array("images", 5),userController.updateUser);
  *     responses:
  *       200:
  *         description: Usuario eliminado exitosamente.
- *       404:
- *         description: Error al obtener el recurso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: "Usuario eliminado exitosamente"
+ *                 payload:
+ *                   nullable: true
+ *                   example: null
  *       400:
- *         description: Error al eliminar el recurso
+ *         description: Datos de entrada inválidos.
+ *         content:
+ *           application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Usuario no encontrado
+ *         content:
+ *           application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
 */
 
 // Eliminar usuario por ID

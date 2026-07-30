@@ -20,7 +20,6 @@ Además, incorpora un sistema centralizado de manejo de errores mediante una **F
 
 - Node.js
 - Express
-- MongoDB
 - Mongoose
 - Faker.js
 - Multer
@@ -28,6 +27,8 @@ Además, incorpora un sistema centralizado de manejo de errores mediante una **F
 - Winston
 - Dotenv
 - CORS
+- swagger-jsdoc
+- swagger-ui-express
 
 ---
 
@@ -52,11 +53,10 @@ npm install bcryptjs
 npm install cors
 npm install dotenv
 npm install express
-npm install mongodb
 npm install mongoose
 npm install multer
 npm install winston
-npm install winston-daily-rotate-file
+
 
 Para instalar todas las Dependencias
 npm install
@@ -178,6 +178,280 @@ Disponible únicamente en desarrollo.
 | POST | /api/mocks/generateData |    Genera datos ficticios y los guarda en la base de datos para realizar pruebas de la aplicación.
 
 ---
+
+
+# Documentación Swagger
+
+La API cuenta con documentación interactiva utilizando **Swagger UI** y **swagger-jsdoc**, permitiendo visualizar, probar y conocer la estructura de todos los endpoints disponibles.
+
+La documentación incluye:
+
+* Rutas disponibles de la API.
+* Parámetros requeridos.
+* Respuestas esperadas.
+* Códigos HTTP utilizados.
+* Modelos de datos mediante schemas.
+* Ejemplos de request y response.
+
+---
+
+# Acceso a Swagger
+
+Una vez iniciado el servidor, la documentación puede consultarse en:
+
+```
+http://localhost:8000/api/docs
+```
+
+---
+
+# Configuración Swagger
+
+Swagger fue implementado utilizando:
+
+* `swagger-jsdoc` para generar la documentación desde comentarios JSDoc.
+* `swagger-ui-express` para mostrar la interfaz gráfica.
+
+La configuración se encuentra dentro de:
+
+```
+config/
+└── swagger.js
+```
+
+---
+
+# Schemas documentados
+
+Se crearon modelos dentro de `components.schemas` para representar las entidades principales de la aplicación.
+
+## Usuarios
+
+Schemas disponibles:
+
+* `User`
+* `UserCreate`
+* `UserUpdate`
+* `MockUser`
+
+Incluye documentación de:
+
+* Datos personales.
+* Roles del sistema.
+* Direcciones.
+* Documentos.
+* Imágenes.
+* Creación y actualización de usuarios.
+
+---
+
+## Productos
+
+Schemas disponibles:
+
+* `Product`
+* `ProductCreate`
+* `ProductUpdate`
+* `MockProduct`
+
+Incluye documentación de:
+
+* Información del producto.
+* Precio.
+* Stock.
+* Categorías.
+* Imágenes.
+* Usuario vendedor.
+* Fechas de creación y actualización.
+
+---
+
+## Tiendas
+
+Schemas disponibles:
+
+* `Store`
+* `StoreCreate`
+* `StoreUpdate`
+* `MockStore`
+
+Incluye documentación de:
+
+* Propietario.
+* Nombre y descripción.
+* Dirección.
+* Contacto.
+* Imágenes.
+* Estado activo de la tienda.
+
+---
+
+## Órdenes
+
+Schemas disponibles:
+
+* `Order`
+* `OrderCreate`
+* `MockOrder`
+* `OrderProduct`
+* `DeliveryAddress`
+
+Incluye documentación de:
+
+* Comprador.
+* Tienda asociada.
+* Productos comprados.
+* Dirección de entrega.
+* Estado de la orden.
+* Prioridad.
+* Comprobante.
+* Fechas de creación y actualización.
+
+---
+
+## Datos Mock
+
+Schemas disponibles:
+
+* `MockUser`
+* `MockProduct`
+* `MockStore`
+* `MockOrder`
+
+Los endpoints Mock permiten:
+
+* Generar usuarios ficticios.
+* Generar productos ficticios.
+* Generar tiendas ficticias.
+* Generar órdenes ficticias.
+* Generar un conjunto completo de datos.
+* Guardar datos de prueba en MongoDB.
+
+Disponible únicamente en entorno de desarrollo.
+
+---
+
+# Endpoints documentados en Swagger
+
+## Usuarios
+
+Documentados:
+
+```
+GET    /api/users
+GET    /api/users/:id
+POST   /api/users
+PUT    /api/users/:id
+DELETE /api/users/:id
+```
+
+---
+
+## Productos
+
+Documentados:
+
+```
+GET    /api/products
+GET    /api/products/categories
+GET    /api/products/:id
+POST   /api/products
+PUT    /api/products/:id
+DELETE /api/products/:id
+```
+
+---
+
+## Tiendas
+
+Documentados:
+
+```
+GET    /api/stores
+GET    /api/stores/:id
+GET    /api/stores/owner/:ownerId
+POST   /api/stores
+PUT    /api/stores/:id
+DELETE /api/stores/:id
+```
+
+---
+
+## Órdenes
+
+Documentados:
+
+```
+GET    /api/orders
+GET    /api/orders/:id
+GET    /api/orders/buyer/:buyerId
+GET    /api/orders/store/:storeId
+POST   /api/orders
+PATCH  /api/orders/:id/status
+PATCH  /api/orders/:id/priority
+PATCH  /api/orders/:id/proof
+DELETE /api/orders/:id
+```
+
+---
+
+## Mock
+
+Documentados:
+
+```
+GET  /api/mocks/mockingusers
+GET  /api/mocks/mockingproducts
+GET  /api/mocks/mockingorders
+GET  /api/mocks/mockingstores
+GET  /api/mocks/mockingall
+POST /api/mocks/generateData
+```
+
+---
+
+# Respuestas de error documentadas
+
+Swagger incluye un schema común:
+
+```
+ErrorResponse
+```
+
+Utilizado para representar errores generados por:
+
+* Validaciones.
+* Recursos inexistentes.
+* Errores de base de datos.
+* Errores internos del servidor.
+
+Ejemplo:
+
+```json
+{
+    "status": "error",
+    "message": "Error al obtener el recurso",
+    "error": null
+}
+```
+
+---
+
+# Beneficios de la documentación Swagger
+
+✔ Permite probar la API sin herramientas externas.
+
+✔ Facilita la integración con frontend.
+
+✔ Mantiene documentados los contratos de la API.
+
+✔ Centraliza ejemplos de request y response.
+
+✔ Permite verificar rápidamente cambios en endpoints y modelos.
+
+```
+```
+
 
 # Manejo de errores
 
