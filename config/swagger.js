@@ -679,7 +679,7 @@ export const swaggerSpec = swaggerJSDoc({
                             example: "Error al obtener el recurso"
                         },
                         error: {
-                            type: "object",
+                            type: "string",
                             nullable: true,
                             example: null
                         }
@@ -897,25 +897,6 @@ export const swaggerSpec = swaggerJSDoc({
                     }
                 },
 
-
-                LoggerResponse:{
-                    type:"object",
-                    properties:{
-                        status:{
-                            type:"string",
-                            example:"success"
-                        },
-                        message:{
-                            type:"string",
-                            example:"Logger funcionando correctamente"
-                        }
-                    }
-                },
-
-
-
-            }
-        }
-    },
-    apis: ["./routes/*.js"]
-});
+            } 
+        } 
+    }, apis: ["./routes/*.js"] });

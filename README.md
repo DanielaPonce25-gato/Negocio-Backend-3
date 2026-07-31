@@ -418,6 +418,10 @@ Swagger incluye un schema común:
 ErrorResponse
 ```
 
+Este schema es reutilizado por todos los endpoints de la API para documentar las respuestas de error.
+
+La API implementa un sistema centralizado de manejo de errores mediante un middleware global, por lo que todas las respuestas de error mantienen la misma estructura, variando únicamente el código HTTP, el mensaje y el tipo de error según la situación.
+
 Utilizado para representar errores generados por:
 
 * Validaciones.
@@ -459,17 +463,18 @@ La API implementa un sistema centralizado de manejo de errores basado en:
 
 - Factory `createError()`
 - Diccionario `ERROR_DICTIONARY`
-- Middleware global de errores
+- Middleware global de errores `errorHandler`
+- Función `apiErrorResponse()`
 
-Cada error devuelve una respuesta consistente.
+Todas las excepciones son procesadas por el middleware global, devolviendo una respuesta consistente para todos los endpoints.
 
 Ejemplo
 
 ```json
 {
-    "status":"error",
-    "code":"VALIDATION_ERROR",
-    "message":"Datos de entrada inválidos"
+    "status": "error",
+    "message": "Datos de entrada inválidos",
+    "error": "VALIDATION_ERROR"
 }
 ```
 
@@ -501,8 +506,7 @@ La aplicación utiliza **Winston** para registrar:
 - Errores
 - Solicitudes HTTP
 
-Los errores también son registrados por el middleware global.
-
+El logger se implementa mediante un middleware (addLogger), por lo que todas las peticiones son registradas automáticamente. Además, el middleware global de manejo de errores registra el detalle de cada excepción para facilitar el diagnóstico y la depuración de la aplicación.
 ---
 
 # Arquitectura
@@ -518,6 +522,7 @@ Los errores también son registrados por el middleware global.
 ├── repositories/
 ├── routes/
 ├── services/
+├── tests/
 ├── tools/
 ├── uploads/
 ├── utils/
