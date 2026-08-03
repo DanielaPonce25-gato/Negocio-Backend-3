@@ -1,10 +1,23 @@
 import { expect } from "chai";
 import supertest from "supertest";
+import mongoose from "mongoose";
+
 import app from "../app.js";
+import connectDB from "../config/db.js";
 
 const requester = supertest(app);
 
-describe("Testing funcional del módulo Mocking", () => {
+describe("Testing funcional del módulo Mocking", function () {
+
+    this.timeout(15000);
+
+    before(async () => {
+        await connectDB();
+    });
+
+    after(async () => {
+        await mongoose.connection.close();
+    });
 
     it("Debe obtener correctamente los usuarios simulados", async () => {
 
@@ -212,7 +225,7 @@ describe("Testing funcional del módulo Mocking", () => {
 
         const response = await requester.post("/api/mocks/generateData");
 
-        expect(response.status).to.equal(200);
+        expect(response.status).to.equal(201);
 
         expect(response.body.status).to.equal("success");
 

@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 
 const categories = [
     "Ropa",
-    "Eletródomesticos",
+    "Eletrodomesticos",
     "Hogar",
     "libros",
     "Deportes",

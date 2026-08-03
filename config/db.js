@@ -1,16 +1,17 @@
+
 import mongoose from "mongoose";
 import { envConfig } from "./env.js";
 import "../models/Store.js";
 
 const connectDB = async () => {
-  const mongoUri = envConfig.mongoUri;
-
-  if (!mongoUri) {
-    throw new Error("Falta la variable MONGODB_URI");
+  if (!envConfig.mongoUri) {
+    throw new Error("Falta la URI de conexión a MongoDB");
   }
 
-  await mongoose.connect(mongoUri);
+  await mongoose.connect(envConfig.mongoUri);
+
   console.log("MongoDB conectado");
+  console.log("Base de datos:", mongoose.connection.name);
 };
 
 export default connectDB;
