@@ -232,7 +232,7 @@ export const updateOrderProof = async (req, res, next) => {
 export const deleteOrder = async (req, res, next) => {
     try {
 
-        req.logger.warn(`Eliminando orden id: ${req.params.id}`);
+        req.logger.warning(`Eliminando orden id: ${req.params.id}`);
 
         const deleted = await orderService.deleteOrder(req.params.id);
 

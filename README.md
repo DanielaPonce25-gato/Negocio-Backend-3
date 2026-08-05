@@ -27,8 +27,10 @@ Además, incorpora un sistema centralizado de manejo de errores mediante una **F
 - Winston
 - Dotenv
 - CORS
-- swagger-jsdoc
-- swagger-ui-express
+- Swagger (swagger-jsdoc y swagger-ui-express)
+- Mocha
+- Chai
+- Supertest
 
 ---
 
@@ -63,7 +65,10 @@ npm install
 
 # dependencias de desarrollo:
 
-npm install -D @faker-js/faker
+npm install -D @faker-js/faker 
+npm install -D chai 
+npm install -D mocha 
+npm install -D supertest 
 npm install -D nodemon
 
 ```
@@ -80,6 +85,8 @@ Ejemplo
 PORT=8000
 
 MONGO_URI=mongodb://localhost:27017/shipnow
+
+MONGODB_TEST_URI=
 
 NODE_ENV=development
 ```
@@ -105,6 +112,11 @@ Servidor
 ```
 http://localhost:8000
 ```
+
+# Ejecutar tests
+
+```bash
+npm test
 
 ---
 
@@ -537,53 +549,57 @@ El logger se implementa mediante un middleware (addLogger), por lo que todas las
 
 ---
 
-# Organización del proyecto
+# Organización del proyecto 
 
-### config
+### config 
 
-Configuración general de la aplicación.
+Configuración general de la aplicación. 
 
-### constants
+### constants 
 
-Constantes utilizadas por la aplicación.
+Constantes utilizadas por la aplicación. 
 
-### controllers
+### controllers 
 
-Reciben las peticiones HTTP y generan las respuestas.
+Reciben las peticiones HTTP y generan las respuestas. 
 
-### middleware
+### middleware 
 
-Middleware de logger, manejo global de errores y rutas inexistentes.
+Middleware de logger, manejo global de errores y rutas inexistentes. 
 
-### models
+### models 
 
-Modelos de Mongoose.
+Modelos de Mongoose. 
 
-### repositories
+### repositories 
 
-Acceso a la base de datos.
+Acceso a la base de datos. 
 
-### services
+### services 
 
-Contienen la lógica de negocio y las validaciones.
+Contienen la lógica de negocio y las validaciones. 
 
-### routes
+### tests 
 
-Definición de los endpoints.
+Contiene las pruebas funcionales de la API utilizando Mocha, Chai y Supertest. 
 
-### utils
+### routes 
 
-Funciones auxiliares, respuestas de la API, Factory de errores y diccionario de errores.
+Definición de los endpoints. 
+
+### utils 
+
+Funciones auxiliares, respuestas de la API, Factory de errores y diccionario de errores. 
 
 ### tools 
 
-Scripts JavaScript del frontend para la interacción con las vistas y el consumo de la API.
+Scripts JavaScript del frontend para la interacción con las vistas y el consumo de la API. 
 
-### uploads
+### uploads 
 
-Almacenamiento de imágenes subidas por los usuarios.
+Almacenamiento de imágenes subidas por los usuarios. 
 
-### views
+### views 
 
 Páginas HTML del proyecto.
 
