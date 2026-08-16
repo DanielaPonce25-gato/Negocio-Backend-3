@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="/uploads/logo.jpg" type="image/x-icon">
+    <title>MondoCompras</title>
+
+    <link rel="stylesheet" href="/css/formulario.css">
+    <script src="/tools/formulario.js" defer></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Registro de Usuario</h2>
+
+    <form id="userForm">
+
+        <label for="firstName">Nombre</label>
+        <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            required>
+
+        <label for="lastName">Apellido</label>
+        <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            required>
+
+        <label for="email">Email</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            required>
+
+        <label for="password">Contraseña</label>
+        <input
+            type="password"
+            id="password"
+            name="password"
+            required>
+
+        <label for="addressLabel">Tipo de Dirección</label>
+        <select id="addressLabel" name="addressLabel" required>
+            <option value="">Seleccione tipo</option>
+            <option value="home">Casa</option>
+            <option value="work">Trabajo</option>
+        </select>
+
+        <label for="address">Dirección</label>
+        <input
+            type="text"
+            id="address"
+            name="address"
+            required>
+
+        <label for="reference">Referencia (opcional)</label>
+        <input
+            type="text"
+            id="reference"
+            name="reference"
+            placeholder="Ej: Portón negro, departamento 5">
+
+        <label for="role">Rol</label>
+        <select id="role" name="role" required>
+            <option value="">Seleccione un rol</option>
+            <option value="customer">Cliente</option>
+            <option value="driver">Repartidor</option>
+            <option value="admin">Administrador</option>
+        </select>
+
+        <label for="documentType">Tipo de documento</label>
+
+        <select id="documentType" name="documentType">
+            <option value="">Seleccione un documento</option>
+            <option value="user_document">Documento de identidad</option>
+            <option value="driver_license">Licencia de conducir</option>
+            <option value="delivery_proof">Comprobante de entrega</option>
+        </select>
+
+        <label for="documentFile">Documento (PDF opcional)</label>
+        <input
+            type="file"
+            id="documentFile"
+            name="document"
+            accept="application/pdf">
+        <small>Formato PDF</small>
+
+        <label>Foto de perfil (opcional)</label>
+
+        <div class="image-options">
+
+            <div class="image-option">
+                <label for="profileImage">
+                    Subir imagen desde la computadora
+                </label>
+
+                <input
+                    type="file"
+                    id="profileImage"
+                    name="images"
+                    accept="image/png,image/jpeg,image/webp,image/gif">
+
+                <small>Formatos: JPG, PNG, WebP y GIF</small>
+            </div>
+
+            <hr>
+
+            <div class="image-option">
+                <label for="imageUrl">
+                    O ingresar una URL de imagen
+                </label>
+
+                <input
+                    type="url"
+                    id="imageUrl"
+                    name="imageUrl"
+                    placeholder="https://ejemplo.com/foto.jpg">
+            </div>
+
+        </div>
+
+        <button type="submit">
+            Registrar
+        </button>
+
+    </form>
+
+    <div id="respuesta">
+        Esperando respuesta...
+    </div>
+
+    <div class="acciones">
+
+        <button type="button" onclick="location.href='/login'">
+            Ir al Login
+        </button>
+
+        <button type="button" onclick="location.href='/'">
+            Volver al Inicio
+        </button>
+
+    </div>
+
+</div>
+</body>
+</html>
